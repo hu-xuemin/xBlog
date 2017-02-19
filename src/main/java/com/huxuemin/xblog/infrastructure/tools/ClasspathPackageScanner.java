@@ -84,7 +84,7 @@ public class ClasspathPackageScanner {
 //            if (logger.isDebugEnabled()) {
 //                logger.debug("{} 是一个目录", filePath);
 //            }
-        	System.out.println("{"+filePath+ "} 是一个目录");
+//        	System.out.println("{"+filePath+ "} 是一个目录");
             names = readFromDirectory(filePath);
         }
 

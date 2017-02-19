@@ -15,7 +15,7 @@ public class StringUtil {
 		String fileUrl = url.getFile();
 		int pos = fileUrl.indexOf('!');
 
-		System.out.println("fileUrl:" + fileUrl);
+//		System.out.println("fileUrl:" + fileUrl);
 		if (-1 == pos) {
 			return fileUrl;
 		}

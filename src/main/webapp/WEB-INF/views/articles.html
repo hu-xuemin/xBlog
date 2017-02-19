@@ -50,17 +50,7 @@
 				<legend></legend>
 				<legend>评论列表：</legend>
 				<div id="discussArea"></div>
-				<div id="discussPage" class="pagination">
-					<ul>
-						<li><a href="#">&laquo;</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&raquo;</a></li>
-					</ul>
-				</div>
+				<div id="discussPage" class="pagination"></div>
 				<form id="reply" accept-charset="UTF-8" method="post">
 					<fieldset>
 						<label>发表评论：</label>
@@ -74,101 +64,96 @@
 		</div>
 	</div>
 	<script>
-		var id = 0;
+		var articleId = 0;
+		var curDiscussPage = 1;
 		var refreshfun;
-		$(document)
-				.ready(
-						function() {
-							id = $.simpleBlog.getArticleId();
-							/*  alert(id); */
-							if (id) {
-								$.ajax({
-									url : "../api/articles/" + id,
-									type : "GET",
-									dataType : 'json',
-									success : function(data) {
-										$("#reply").attr(
-												"action",
-												"../api/articles/" + id
-														+ "/discuss");
-										$("#articleTitle").text(
-												data.articleTitle);
-										$("#articleTitleForContent").html(
-												data.articleTitle);
-										$("#articleContent").html(
-												data.articleContent);
-									},
-									error : function() {
-										$("#divError").show().html("文章不存在！");
-									}
-								});
-								$.ajax({
-									url : "../api/articles/" + id
-											+ "/discuss/page/1",
-									type : "GET",
-									dataType : 'json',
-									success : function(data) {
-										refreshDiscussArea(data);
-										refreshfun = setTimeout(
-												"refreshDiscuss()", 50000);
-									},
-									error : function() {
-									}
-								});
-								$("#reply")
-										.asynSubmit(
-												{
-													beforeSubmit : function() {
-														var comment = $(
-																"#content")
-																.val().trim();
-														if (comment.length < 5) {
-															$("#discussError")
-																	.show()
-																	.html(
-																			"评论不能少于五个字！");
-															return false;
-														}
-														return true;
-													},
-													successSubmit : function(
-															data) {
-														$("#content").val("");
-														refreshDiscuss();
-													},
-													errorSubmit : function(
-															XMLHttpRequest,
-															textStatus,
-															errorThrown) {
-														$("#discussError")
-																.show()
-																.html(
-																		XMLHttpRequest.responseJSON.message);
-													}
-												});
-							} else {
-								$("#divError").show().html("文章不存在！");
+		$(document).ready(function() {
+			articleId = $.simpleBlog.getArticleId();
+			/*  alert(id); */
+			if (articleId) {
+				loadArticle(articleId);
+				refreshDiscuss(1);
+				initReply();
+				refreshDiscussPageNav();
+			} else {
+				$("#divError").show().html("文章不存在！");
+			}
+			$.simpleBlog.refreshUserNameArea();
+		});
+
+		function initReply() {
+			$("#reply").asynSubmit(
+					{
+						beforeSubmit : function() {
+							var comment = $("#content").val().trim();
+							if (comment.length < 5) {
+								$("#discussError").show().html("评论不能少于五个字！");
+								return false;
 							}
-							$.simpleBlog.refreshUserNameArea();
-						});
-		function refreshDiscuss() {
-			clearTimeout(refreshfun);
+							return true;
+						},
+						successSubmit : function(data) {
+							$("#content").val("");
+							refreshDiscussLastPage();
+						},
+						errorSubmit : function(XMLHttpRequest, textStatus,
+								errorThrown) {
+							$("#discussError").show().html(
+									XMLHttpRequest.responseJSON.message);
+						}
+					});
+		};
+
+		function loadArticle(id) {
 			$.ajax({
-				url : "../api/articles/" + id + "/discuss/page/1",
+				url : "../api/articles/" + id,
 				type : "GET",
 				dataType : 'json',
-				data : {
-					"articleid" : id,
-					"refresh" : "true"
-				},
 				success : function(data) {
-					refreshDiscussArea(data);
+					$("#reply").attr("action",
+							"../api/articles/" + id + "/discuss");
+					$("#articleTitle").text(data.articleTitle);
+					$("#articleTitleForContent").html(data.articleTitle);
+					$("#articleContent").html(data.articleContent);
 				},
 				error : function() {
+					$("#divError").show().html("文章不存在！");
 				}
 			});
-			refreshfun = setTimeout("refreshDiscuss()", 50000);
 		};
+
+		function refreshDiscuss(page) {
+			if (page > 0) {
+				clearTimeout(refreshfun);
+				curDiscussPage = page;
+
+				$.ajax({
+					url : "../api/articles/" + articleId + "/discuss/page/"
+							+ page,
+					type : "GET",
+					dataType : 'json',
+					data : {
+						"articleid" : articleId,
+						"refresh" : "true"
+					},
+					success : function(data) {
+						refreshDiscussArea(data);
+						refreshDiscussPageNav();
+						refreshfun = setTimeout("refreshDiscuss("
+								+ curDiscussPage + ")", 50000);
+					},
+					error : function() {
+						var prePage = curDiscussPage - 1;
+						if (prePage > 0) {
+							curDiscussPage = prePage;
+						}
+						refreshfun = setTimeout("refreshDiscuss("
+								+ curDiscussPage + ")", 50000);
+					}
+				});
+			}
+		};
+
 		function refreshDiscussArea(data) {
 			$("#discussArea").empty();
 			for (var i = 0; i < data.discusses.length; i++) {
@@ -182,6 +167,64 @@
 								+ "</div><div class=\"panel-body\">"
 								+ data.discusses[i].content + "</div></div>");
 			}
+		};
+
+		function refreshDiscussLastPage() {
+			$.ajax({
+				url : "../api/articles/" + articleId + "/discuss/page",
+				type : "GET",
+				dataType : 'json',
+				success : function(data) {
+					if (data.total > 0) {
+						refreshDiscuss(data.total);
+					}
+				},
+				error : function() {
+				}
+			});
+		}
+
+		function refreshDiscussPageNav() {
+			$.ajax({
+						url : "../api/articles/" + articleId + "/discuss/page",
+						type : "GET",
+						dataType : 'json',
+						success : function(data) {
+							if (data.total > 0) {
+								$("#discussPage").empty();
+								$("#discussPage").append("<ul></ul>");
+								var ul = $("#discussPage ul")
+								ul
+										.append("<li><a href=\"javascript:refreshDiscuss("
+												+ (curDiscussPage - 1)
+												+ ")\">&laquo;</a></li>");
+								for (var i = 1; i <= data.total; i++) {
+									if (curDiscussPage == i) {
+										ul
+												.append("<li class=\"active\"><a href=\"javascript:refreshDiscuss("
+														+ i
+														+ ")\">"
+														+ i
+														+ "</a></li>");
+									} else {
+										ul
+												.append("<li><a href=\"javascript:refreshDiscuss("
+														+ i
+														+ ")\">"
+														+ i
+														+ "</a></li>");
+									}
+								}
+								ul
+										.append("<li><a href=\"javascript:refreshDiscuss("
+												+ (curDiscussPage + 1)
+												+ ")\">&raquo;</a></li>");
+							}
+						},
+						error : function() {
+							$("#divError").show().html("文章不存在！");
+						}
+					});
 		};
 	</script>
 </body>
