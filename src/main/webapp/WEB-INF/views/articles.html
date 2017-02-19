@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<link href="./../css/bootstrap-theme.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="./../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="./../css/bootstrap-combined.min.css" rel="stylesheet"
+	type="text/css" media="screen" />
+<link href="./../css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="./../css/default-home.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="./../images/Home.ico" />
+<script type="text/javascript" src="./../js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="./../js/jquery-ui.js"></script>
+<script type="text/javascript" src="./../js/default-main.js"></script>
+<script type="text/javascript" src="./../js/jquery.base64.js"></script>
+<title>心有猛虎，细嗅蔷薇</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div id="logoutArea" style="display: none;">
+					<p class="navbar-text pull-right">
+						<a href="#" id="userDisplayName" class="navbar-link">null</a>
+						<button id="logout" class="btn btn-link">注销</button>
+					</p>
+					<div class="navbar-text  pull-right">欢迎回来！&nbsp&nbsp</div>
+				</div>
+				<div id="login_register">
+					<p class="navbar-text pull-right">
+						<a href="../login" class="navbar-link">登录</a> <a
+							href="../register" class="navbar-link">注册</a>
+					</p>
+				</div>
+				<h3>心有猛虎，细嗅蔷薇</h3>
+				<ul class="breadcrumb">
+					<li><a href="../index">主页</a> <span class="divider">/</span></li>
+					<li><a href="../index">Blog</a> <span class="divider">/</span>
+					</li>
+					<li id="articleTitle" class="active">第一篇文章</li>
+				</ul>
+				<div id="divError" class="clsError"></div>
+				<h2>
+					<div id="articleTitleForContent"></div>
+				</h2>
+
+				<div id="articleContent"></div>
+
+				<legend></legend>
+				<legend>评论列表：</legend>
+				<div id="discussArea"></div>
+				<div id="discussPage" class="pagination">
+					<ul>
+						<li><a href="#">&laquo;</a></li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</ul>
+				</div>
+				<form id="reply" accept-charset="UTF-8" method="post">
+					<fieldset>
+						<label>发表评论：</label>
+						<div id="discussError" class="clsError"></div>
+						<textarea name="content" id="content" class="comments" type="text"></textarea>
+						<br />
+						<button class="btn" type="submit">提交</button>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		var id = 0;
+		var refreshfun;
+		$(document)
+				.ready(
+						function() {
+							id = $.simpleBlog.getArticleId();
+							/*  alert(id); */
+							if (id) {
+								$.ajax({
+									url : "../api/articles/" + id,
+									type : "GET",
+									dataType : 'json',
+									success : function(data) {
+										$("#reply").attr(
+												"action",
+												"../api/articles/" + id
+														+ "/discuss");
+										$("#articleTitle").text(
+												data.articleTitle);
+										$("#articleTitleForContent").html(
+												data.articleTitle);
+										$("#articleContent").html(
+												data.articleContent);
+									},
+									error : function() {
+										$("#divError").show().html("文章不存在！");
+									}
+								});
+								$.ajax({
+									url : "../api/articles/" + id
+											+ "/discuss/page/1",
+									type : "GET",
+									dataType : 'json',
+									success : function(data) {
+										refreshDiscussArea(data);
+										refreshfun = setTimeout(
+												"refreshDiscuss()", 50000);
+									},
+									error : function() {
+									}
+								});
+								$("#reply")
+										.asynSubmit(
+												{
+													beforeSubmit : function() {
+														var comment = $(
+																"#content")
+																.val().trim();
+														if (comment.length < 5) {
+															$("#discussError")
+																	.show()
+																	.html(
+																			"评论不能少于五个字！");
+															return false;
+														}
+														return true;
+													},
+													successSubmit : function(
+															data) {
+														$("#content").val("");
+														refreshDiscuss();
+													},
+													errorSubmit : function(
+															XMLHttpRequest,
+															textStatus,
+															errorThrown) {
+														$("#discussError")
+																.show()
+																.html(
+																		XMLHttpRequest.responseJSON.message);
+													}
+												});
+							} else {
+								$("#divError").show().html("文章不存在！");
+							}
+							$.simpleBlog.refreshUserNameArea();
+						});
+		function refreshDiscuss() {
+			clearTimeout(refreshfun);
+			$.ajax({
+				url : "../api/articles/" + id + "/discuss/page/1",
+				type : "GET",
+				dataType : 'json',
+				data : {
+					"articleid" : id,
+					"refresh" : "true"
+				},
+				success : function(data) {
+					refreshDiscussArea(data);
+				},
+				error : function() {
+				}
+			});
+			refreshfun = setTimeout("refreshDiscuss()", 50000);
+		};
+		function refreshDiscussArea(data) {
+			$("#discussArea").empty();
+			for (var i = 0; i < data.discusses.length; i++) {
+				$("#discussArea").append(
+						"<div class=\"panel panel-info\"><div class=\"panel-heading\">"
+								+ "<a href=../user/"
+								+ $.trim(data.discusses[i].owerUserName)
+								+ " class=\"navbar-link\">"
+								+ data.discusses[i].owerDisplayName + "</a>"
+								+ "  " + data.discusses[i].createOn
+								+ "</div><div class=\"panel-body\">"
+								+ data.discusses[i].content + "</div></div>");
+			}
+		};
+	</script>
+</body>
+</html>

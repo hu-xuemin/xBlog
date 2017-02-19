@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<link href="./../css/bootstrap-theme.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="./../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="./../css/bootstrap-combined.min.css" rel="stylesheet"
+	type="text/css" media="screen" />
+<link href="./../css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="./../css/default-home.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="./../images/Home.ico" />
+<script type="text/javascript" src="./../js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="./../js/jquery-ui.js"></script>
+<script type="text/javascript" src="./../js/default-main.js"></script>
+<script type="text/javascript" src="./../js/jquery.base64.js"></script>
+<title>心有猛虎，细嗅蔷薇</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div id="logoutArea" style="display: none;">
+					<p class="navbar-text pull-right">
+						<a href="#" id="userDisplayName" class="navbar-link">null</a>
+						<button id="logout" class="btn btn-link">注销</button>
+					</p>
+					<div class="navbar-text  pull-right">欢迎回来！&nbsp&nbsp</div>
+				</div>
+				<div id="login_register">
+					<p class="navbar-text pull-right">
+						<a href="login" class="navbar-link">登录</a> <a
+							href="register" class="navbar-link">注册</a>
+					</p>
+				</div>
+				<h3>心有猛虎，细嗅蔷薇</h3>
+				<ul class="breadcrumb">
+					<li><a href="../index">主页</a> <span class="divider">/</span>
+					</li>
+					<li><a href="../index">Blog</a> <span class="divider">/</span>
+					</li>
+					<li id="articleTitle" class="active">用户信息</li>
+				</ul>
+				<div id="divError" class="clsError"></div>
+				<div>
+					<p class="navbar-text pull-right">
+						<button id="edit" class="btn-primary">编辑资料</button>
+					</p>
+				</div>
+				<form class="form-horizontal" id="user_info" accept-charset="UTF-8"
+					method="PUT">
+					<fieldset>
+						<div id="legend" class="">
+							<legend class="">个人信息</legend>
+						</div>
+						<input name="userName" id="username" class="input-xlarge"
+							style="display: none" type="text" readonly="true">
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="firstname">姓</label>
+
+							<div class="controls">
+								<input name="firstName" id="firstname" class="input-xlarge"
+									type="text" readonly="true">
+
+								<p class="help-block">姓：张</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="lastname">名</label>
+
+							<div class="controls">
+								<input name="lastName" id="lastname" class="input-xlarge"
+									type="text" readonly="true">
+
+								<p class="help-block">名：三</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="country">国籍</label>
+
+							<div class="controls">
+								<input name="country" id="country" class="input-xlarge"
+									type="text" readonly="true">
+
+								<p class="help-block">国籍：中国</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Select Basic -->
+							<label class="control-label">语言</label>
+
+							<div class="controls">
+								<select name="lang" id="lang" disabled="true">
+									<option value="">(auto)</option>
+									<option value="sq">Albanian (Shqip)</option>
+									<option value="ar">Arabic (عربي)</option>
+									<option value="az">Azerbaijanian (Azeri)</option>
+									<option value="eu">Basque (Euskara)</option>
+									<option value="bs">Bosnian (Bosanski)</option>
+									<option value="bg">Bulgarian (Български)</option>
+									<option value="ca">Catalan (Català)</option>
+									<option value="hr">Croatian (Hrvatski)</option>
+									<option value="cs">Czech (Čeština)</option>
+									<option value="da">Danish (Dansk)</option>
+									<option value="nl">Dutch (Nederlands)</option>
+									<option value="en">English</option>
+									<option value="en-GB">English (British)</option>
+									<option value="et">Estonian (Eesti)</option>
+									<option value="fi">Finnish (Suomi)</option>
+									<option value="fr">French (Français)</option>
+									<option value="gl">Galician (Galego)</option>
+									<option value="de">German (Deutsch)</option>
+									<option value="el">Greek (Ελληνικά)</option>
+									<option value="he">Hebrew (עברית)</option>
+									<option value="hu">Hungarian (Magyar)</option>
+									<option value="id">Indonesian (Bahasa Indonesia)</option>
+									<option value="it">Italian (Italiano)</option>
+									<option value="ja">Japanese (日本語)</option>
+									<option value="ko">Korean (한국어)</option>
+									<option value="lv">Latvian (Latviešu)</option>
+									<option value="lt">Lithuanian (lietuvių)</option>
+									<option value="mk">Macedonian (Македонски)</option>
+									<option value="mn">Mongolian (Монгол)</option>
+									<option value="no">Norwegian (Norsk bokmål)</option>
+									<option value="fa">Persian (پارسی)</option>
+									<option value="pl">Polish (Polski)</option>
+									<option value="pt">Portuguese (Português)</option>
+									<option value="pt-BR">Portuguese/Brasil
+										(Português/Brasil)</option>
+									<option value="ro">Romanian (Română)</option>
+									<option value="ru">Russian (Русский)</option>
+									<option value="sr-YU">Serbian (Srpski)</option>
+									<option value="sr">Serbian Cyrillic (Српски)</option>
+									<option selected="selected" value="zh">Simplified
+										Chinese (简体中文)</option>
+									<option value="sk">Slovak (Slovenčina)</option>
+									<option value="sl">Slovene (Slovenščina)</option>
+									<option value="es">Spanish (Español)</option>
+									<option value="es-PA">Spanish/Panama (Español/Panamá)</option>
+									<option value="sv">Swedish (Svenska)</option>
+									<option value="th">Thai (ไทย)</option>
+									<option value="zh-TW">Traditional Chinese (繁體中文)</option>
+									<option value="tr">Turkish (Türkçe)</option>
+									<option value="uk">Ukrainian (Українська)</option>
+									<option value="vi">Vietnamese (Tiếng Việt)</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="profession">职业</label>
+
+							<div class="controls">
+								<input name="profession" id="profession" class="input-xlarge"
+									type="text" readonly="true">
+
+								<p class="help-block">职业：软件工程师</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="qq">QQ</label>
+
+							<div class="controls">
+								<input name="qq" id="qq" class="input-xlarge" type="text"
+									readonly="true">
+								<p class="help-block">QQ：10000</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="phonenum">电话号码</label>
+
+							<div class="controls">
+								<input name="phoneNum" id="phonenum" class="input-xlarge"
+									type="text" readonly="true">
+
+								<p class="help-block">电话号码：13088888888</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="wechat">微信</label>
+
+							<div class="controls">
+								<input name="wechat" id="wechat" class="input-xlarge"
+									type="text" readonly="true">
+
+								<p class="help-block">微信号码</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Text input-->
+							<label class="control-label" for="email">邮箱</label>
+
+							<div class="controls">
+								<input name="email" id="email" class="input-xlarge" type="text"
+									readonly="true">
+
+								<p class="help-block">微信号码</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Select Basic -->
+							<label class="control-label">性别</label>
+
+							<div class="controls">
+								<select name="sex" id="sex" class="input-xlarge"
+									disabled="true">
+									<option value="man">男</option>
+									<option value="women">女</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<!-- Textarea -->
+							<label class="control-label">个人简介</label>
+
+							<div class="controls">
+								<div class="textarea">
+									<textarea name="profile" id="profile" type="" class=""
+										readonly="true"> </textarea>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<input name="save" id="save" value="保存资料" type="submit"
+									disabled="true">
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		var username;
+		$(document).ready(function() {
+			username = $.simpleBlog.getUserName();
+			if (username) {
+				$.ajax({
+					url : "../api/user/" + username,
+					type : "GET",
+					dataType : 'json',
+					data : {},
+					success : function(data) {
+	                    $("#user_info").attr("action","../api/user/"+username);
+						$("#username").val(data.userName);
+						$("#firstname").val(data.firstName);
+						$("#lastname").val(data.lastName);
+						$("#lang").attr('value', data.lang);
+						$("#country").val(data.country);
+						$("#sex").attr('value', data.sex);
+						$("#qq").val(data.qq);
+						$("#phonenum").val(data.phoneNum);
+						$("#wechat").val(data.wechat);
+						$("#email").val(data.email);
+						$("#profile").val(data.profile);
+						$("#profession").val(data.profession);
+					},
+					error : function() {
+						$("#divError").show().html("user不存在！");
+					}
+				});
+			} else {
+				$("#divError").show().html("用户不存在！");
+			}
+
+			$("#edit").click(function() {
+				$.ajax({
+					url : "../api/user/" + username + "/canedit",
+					type : "GET",
+					dataType : 'json',
+					data : {},
+					success : function(data) {
+						$("#firstname").attr("readonly", false);
+						$("#lastname").attr("readonly", false);
+						$("#lang").attr('disabled', false);
+						$("#country").attr("readonly", false);
+						$("#sex").attr("disabled", false);
+						$("#qq").attr("readonly", false);
+						$("#phonenum").attr("readonly", false);
+						$("#wechat").attr("readonly", false);
+						$("#email").attr("readonly", false);
+						$("#profile").attr("readonly", false);
+						$("#profession").attr("readonly", false);
+						$("#save").attr("disabled", false);
+					},
+					complete : function(XMLHttpRequest, textStatus) {
+					}
+				});
+			});
+			$("#user_info").asynSubmit({
+				beforeSubmit : function() {
+					return true;
+				},
+				successSubmit : function(data) {
+						$("#divError").show().html("保存成功！");
+				},
+		        errorSubmit:function(XMLHttpRequest, textStatus, errorThrown){
+                    $("#divError").show().html(XMLHttpRequest.responseJSON.message);
+		        }
+			});
+			$.simpleBlog.refreshUserNameArea();
+		});
+	</script>
+</body>
+</html>

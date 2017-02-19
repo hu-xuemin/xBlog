@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<!DOCTYPE log4j:configuration PUBLIC
+  "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- [控制台STDOUT] -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="encoding" value="UTF-8" />
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+	<!-- [公共Appender] -->
+	<appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="logs/common-default.log" />
+		<param name="Append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+	<!-- [错误日志APPENDER] -->
+	<appender name="ERROR-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="logs/common-error.log" />
+		<param name="Append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<param name="threshold" value="error" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+	<!-- 由于用了springmvc框架，日志配置好后，会输出很多spring日志，在log4j.xml中，增加一段配置，修改spring包的日志输出级别 -->
+	<!-- 通过<category></category>的定义可以将各个包中的类日志输出到不同的日志文件中 -->
+	<category name="org.springframework">
+		<priority value="ERROR" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+	</category>
+	<!-- Root Logger -->
+	<root>
+		<level value="${rootLevel}"></level>
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DEFAULT-APPENDER" />
+		<appender-ref ref="ERROR-APPENDER" />
+	</root>
+
+</log4j:configuration>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="css/default-home.css" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="images/Home.ico"/>
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/default-main.js"></script>
+    <title>心有猛虎，细嗅蔷薇</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="logoutArea" style="display: none;">
+                <p class="navbar-text pull-right">
+                    <a href="#" id="userDisplayName" class="navbar-link">null</a>
+                    <button id="logout" class="btn btn-link">注销</button>
+                </p>
+                <div class="navbar-text  pull-right">欢迎回来！&nbsp&nbsp</div>
+            </div>
+            <div id="login_register">
+                <p class="navbar-text pull-right">
+                    <a href="login.html" class="navbar-link">登录</a>
+                    <a href="register.html" class="navbar-link">注册</a>
+                </p>
+            </div>
+            <h3>
+                心有猛虎，细嗅蔷薇
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="index">主页</a> <span class="divider">/</span>
+                </li>
+                <li>
+                    <a href="index">Blog</a> <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    主题
+                </li>
+            </ul>
+            <table id="acticles_table" class="table table-condensed table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        Blog
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "api/articles",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
+                $("#divError").show().html("success！");
+                for(var i = 0; i<data.articles.length;i++) {
+                    $("#acticles_table tbody").prepend("<tr><td><a href=\"articles/" + data.articles[i].id + "\"> " + data.articles[i].title + "</a></td></tr>");
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                $("#divError").show().html("complete！");
+            },
+            error: function() {
+                $("#divError").show().html("请求资源错误！");
+            }
+        });
+        $.simpleBlog.refreshUserNameArea();
+    });
+</script>
+</body>
+</html>

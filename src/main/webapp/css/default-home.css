@@ -1,0 +1,189 @@
+body {
+    font-family: STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.title a {
+    display: block;
+}
+
+.title {
+    cursor: pointer;
+}
+
+li.title:hover {
+    background-color: #eee;
+}
+
+.panel {
+    border-radius: 0;
+}
+
+.panel-default > .panel-heading {
+    background-image: none;
+    background-color: #fff;
+}
+
+.navbar-default {
+    background-image: none;
+    background-color: #fff;
+    box-shadow: none;
+}
+
+#footer {
+    clear: both;
+    border-top: 1px solid #bbb;
+    font-size: 0.9em;
+    color: #aaa;
+    padding: 5px;
+    text-align: center;
+    background: #fff;
+}
+
+#login-form table {
+    margin-top: 1em;
+    padding: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #F0F0F0;
+    background-color: #F5F5F5;
+}
+
+#login-form table td {
+    padding: 6px;
+}
+
+#login-form label {
+    font-weight: bold;
+}
+
+#login-form input#loginid, #login-form input#password {
+    width: 300px;
+}
+
+#main.nosidebar #sidebar {
+    display: none;
+}
+
+#main.nosidebar #content {
+    width: auto;
+    border-right: 0;
+}
+
+.box {
+    padding: 6px;
+    margin-bottom: 10px;
+    background-color: #f6f6f6;
+    color: #505050;
+    line-height: 1.5em;
+    border: 1px solid #e4e4e4;
+    word-wrap: break-word;
+}
+
+/***** Tabular forms ******/
+.tabular p {
+    margin: 0;
+    padding: 3px 0 3px 0;
+    padding-left: 180px; /* width of left column containing the label elements */
+    min-height: 1.8em;
+    clear: left;
+}
+
+html > body .tabular p {
+    overflow: hidden;
+}
+
+.tabular input, .tabular select {
+    max-width: 95%
+}
+
+.tabular textarea {
+    width: 95%;
+    resize: vertical;
+}
+
+.tabular label {
+    font-weight: bold;
+    float: left;
+    text-align: right;
+    /* width of left column */
+    margin-left: -60px;
+    /* width of labels. Should be smaller than left column to create some right margin */
+    width: 175px;
+}
+
+.tabular label.floating {
+    font-weight: normal;
+    margin-left: 0px;
+    text-align: left;
+    width: 270px;
+}
+
+.tabular label.block {
+    font-weight: normal;
+    margin-left: 0px !important;
+    text-align: left;
+    float: none;
+    display: block;
+    width: auto !important;
+}
+
+.tabular label.inline {
+    font-weight: normal;
+    float: none;
+    margin-left: 5px !important;
+    width: auto;
+}
+
+.tabular.settings p {
+    padding-left: 300px;
+}
+
+.tabular.settings label {
+    margin-left: -300px;
+    width: 295px;
+}
+
+.tabular.settings textarea {
+    width: 99%;
+}
+
+.comments {
+    width: 300px;
+    height: 80px;
+}
+.clsError
+{
+    font-size: 13px;
+    border: solid 1px #cc3300;
+    padding: 2px;
+    display: none;
+    margin-bottom: 5px;
+    background-color: #ffe0a3;
+}
+@media(max-width:767px) {
+    #langChange {
+        position: absolute;
+        top:0px;
+        right: 72px;
+    }
+}
+#editor {
+    resize:vertical;
+    overflow:auto;
+    border:1px solid silver;
+    border-radius:5px;
+    min-height:100px;
+    box-shadow: inset 0 0 10px silver;
+    padding:1em;
+}
+
+pre {
+    font-family: Inconsolata, Consolas, "DEJA VU SANS MONO", "DROID SANS MONO", Proggy, monospace;
+    border: none;
+    padding: 0px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
