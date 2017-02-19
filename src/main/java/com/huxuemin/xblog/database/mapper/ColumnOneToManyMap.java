@@ -1,11 +1,11 @@
 package com.huxuemin.xblog.database.mapper;
 
-public class OneToManyColumnMap {
-	private OneToOneColumnMap columnMap;
+public class ColumnOneToManyMap {
+	private ColumnOneToOneMap columnMap;
 	private String foreignKeyColumnName;
 	private String foreigntableName;
 	
-	public OneToManyColumnMap(OneToOneColumnMap columnMap, String foreignKeyColumnName, String foreigntableName){
+	public ColumnOneToManyMap(ColumnOneToOneMap columnMap, String foreignKeyColumnName, String foreigntableName){
 		this.columnMap = columnMap;
 		this.foreignKeyColumnName = foreignKeyColumnName;
 		this.foreigntableName = foreigntableName;

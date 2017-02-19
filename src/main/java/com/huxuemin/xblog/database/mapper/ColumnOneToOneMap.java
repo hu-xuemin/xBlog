@@ -2,13 +2,13 @@ package com.huxuemin.xblog.database.mapper;
 
 import java.lang.reflect.Field;
 
-public class OneToOneColumnMap {
+public class ColumnOneToOneMap {
 	private String columnName;
 	private String fieldName;
 	protected Field field;
 	private TableMap dataMap;
 	
-	public OneToOneColumnMap(String columnName,String fieldName,TableMap dataMap){
+	public ColumnOneToOneMap(String columnName,String fieldName,TableMap dataMap){
 		this.columnName = columnName;
 		this.fieldName = fieldName;
 		this.dataMap = dataMap;

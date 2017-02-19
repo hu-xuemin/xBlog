@@ -9,9 +9,9 @@ import com.huxuemin.xblog.infrastructure.DomainObject;
 public class TableMap<T extends DomainObject> {
 	private Class<T> domainClass;
 	private String tableName;
-	private OneToOneColumnMap primaryKeyColumn;  
-	private List<OneToOneColumnMap> oneToOneColumnMaps = new ArrayList<OneToOneColumnMap>();
-	private List<OneToManyColumnMap> oneToManyColumnMaps = new ArrayList<OneToManyColumnMap>();
+	private ColumnOneToOneMap primaryKeyColumn;  
+	private List<ColumnOneToOneMap> oneToOneColumnMaps = new ArrayList<ColumnOneToOneMap>();
+	private List<ColumnOneToManyMap> oneToManyColumnMaps = new ArrayList<ColumnOneToManyMap>();
 	private List<DomainObjectMap> oneToOneDomainObjectMaps = new ArrayList<DomainObjectMap>();
 	private List<DomainObjectMap> oneToManyDomainObjectMaps = new ArrayList<DomainObjectMap>();
 	
@@ -21,7 +21,7 @@ public class TableMap<T extends DomainObject> {
 	}
 	
 	public void addOneToOneColumn(String columnName,String fieldName){
-		OneToOneColumnMap columnMap = new OneToOneColumnMap(columnName,fieldName,this);
+		ColumnOneToOneMap columnMap = new ColumnOneToOneMap(columnName,fieldName,this);
 		if(!oneToOneColumnMaps.contains(columnMap)){
 			if(primaryKeyColumn == null){
 				primaryKeyColumn = columnMap;
@@ -31,8 +31,8 @@ public class TableMap<T extends DomainObject> {
 	}
 	
 	public void addOneToManyColumn(String columnName,String foreignKeyColumnName,String foreigntableName,String fieldName){
-		OneToOneColumnMap columnMap = new OneToOneColumnMap(columnName,fieldName,this);
-		OneToManyColumnMap oneToManyColumnMap = new OneToManyColumnMap(columnMap,foreignKeyColumnName,foreigntableName);
+		ColumnOneToOneMap columnMap = new ColumnOneToOneMap(columnName,fieldName,this);
+		ColumnOneToManyMap oneToManyColumnMap = new ColumnOneToManyMap(columnMap,foreignKeyColumnName,foreigntableName);
 		if(!oneToManyColumnMaps.contains(oneToManyColumnMap)){
 			oneToManyColumnMaps.add(oneToManyColumnMap);
 		}
@@ -57,7 +57,7 @@ public class TableMap<T extends DomainObject> {
 	}
 	
 	public void setPrimaryKeyColumn(String columnName, String fieldName){
-		this.primaryKeyColumn = new OneToOneColumnMap(columnName,fieldName,this);
+		this.primaryKeyColumn = new ColumnOneToOneMap(columnName,fieldName,this);
 		if(!oneToOneColumnMaps.contains(primaryKeyColumn)){
 			oneToOneColumnMaps.add(primaryKeyColumn);
 		}
@@ -90,8 +90,8 @@ public class TableMap<T extends DomainObject> {
 	
 	public String columnList(){
 		StringBuffer result = new StringBuffer(" ");
-		for(Iterator<OneToOneColumnMap> it = getOneToOneColumns();it.hasNext();){
-			OneToOneColumnMap columnMap = it.next();
+		for(Iterator<ColumnOneToOneMap> it = getOneToOneColumns();it.hasNext();){
+			ColumnOneToOneMap columnMap = it.next();
 			result.append(columnMap.getColumnName());
 			result.append(",");
 		}
@@ -101,8 +101,8 @@ public class TableMap<T extends DomainObject> {
 	
 	public String updateList(){
 		StringBuffer result = new StringBuffer(" SET ");
-		for(Iterator<OneToOneColumnMap> it = getOneToOneColumns();it.hasNext();){
-			OneToOneColumnMap column = it.next();
+		for(Iterator<ColumnOneToOneMap> it = getOneToOneColumns();it.hasNext();){
+			ColumnOneToOneMap column = it.next();
 			result.append(column.getColumnName());
 			result.append("=?,");
 		}
@@ -111,8 +111,8 @@ public class TableMap<T extends DomainObject> {
 	}
 	
 	public String getColumnForField(String fieldName){
-		for(Iterator<OneToOneColumnMap> it = getOneToOneColumns();it.hasNext();){
-			OneToOneColumnMap columnMap = it.next();
+		for(Iterator<ColumnOneToOneMap> it = getOneToOneColumns();it.hasNext();){
+			ColumnOneToOneMap columnMap = it.next();
 			if(columnMap.getFieldName().equals(fieldName)){
 				return columnMap.getColumnName();
 			}
@@ -120,11 +120,11 @@ public class TableMap<T extends DomainObject> {
 		return null;
 	}
 	
-	public Iterator<OneToOneColumnMap> getOneToOneColumns(){
+	public Iterator<ColumnOneToOneMap> getOneToOneColumns(){
 		return oneToOneColumnMaps.iterator();
 	}
 	
-	public Iterator<OneToManyColumnMap> getOneToManyColumns(){
+	public Iterator<ColumnOneToManyMap> getOneToManyColumns(){
 		return oneToManyColumnMaps.iterator();
 	}
 	

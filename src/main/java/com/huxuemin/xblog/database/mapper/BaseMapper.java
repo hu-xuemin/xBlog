@@ -66,8 +66,8 @@ public class BaseMapper<T extends DomainObject> {
 			ResultSet rs = stat.executeQuery();
 			while(rs.next()){
 				result = (T) tableMap.getKlass().newInstance();
-				for(Iterator<OneToOneColumnMap> it = tableMap.getOneToOneColumns();it.hasNext();){
-					OneToOneColumnMap columnMap = it.next();
+				for(Iterator<ColumnOneToOneMap> it = tableMap.getOneToOneColumns();it.hasNext();){
+					ColumnOneToOneMap columnMap = it.next();
 					Object columnValue = rs.getObject(columnMap.getColumnName());
 					columnMap.setField(result, columnValue);
 				}
@@ -89,13 +89,13 @@ public class BaseMapper<T extends DomainObject> {
 	}
 	
 	protected void fillOneToManyFields(T targetobject){
-		for(Iterator<OneToManyColumnMap> it = tableMap.getOneToManyColumns();it.hasNext();){
-			OneToManyColumnMap oneToManyField = it.next();
+		for(Iterator<ColumnOneToManyMap> it = tableMap.getOneToManyColumns();it.hasNext();){
+			ColumnOneToManyMap oneToManyField = it.next();
 			oneToManyField.setField(targetobject, getDataFromDatabase(targetobject,oneToManyField));
 		}
 	}
 	
-	protected List<Object> getDataFromDatabase(T targetobject,OneToManyColumnMap oneToManyField){
+	protected List<Object> getDataFromDatabase(T targetobject,ColumnOneToManyMap oneToManyField){
 		String sql = oneToManyField.selectSQL();
 		Connection conn = DBConnectionFactory.getConnection();
 		PreparedStatement stat;
@@ -152,7 +152,7 @@ public class BaseMapper<T extends DomainObject> {
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			int argCount = 1;
-			for(Iterator<OneToOneColumnMap> it = tableMap.getOneToOneColumns();it.hasNext();){
+			for(Iterator<ColumnOneToOneMap> it = tableMap.getOneToOneColumns();it.hasNext();){
 				stat.setObject(argCount++ , it.next().getValue(object));
 			}
 			int update = stat.executeUpdate();
@@ -175,14 +175,14 @@ public class BaseMapper<T extends DomainObject> {
 	
 	protected void insertOneToManyColumns(T object) {
 		// TODO Auto-generated method stub
-		Iterator<OneToManyColumnMap> it = tableMap.getOneToManyColumns();
+		Iterator<ColumnOneToManyMap> it = tableMap.getOneToManyColumns();
 		while(it.hasNext()){
-			OneToManyColumnMap oneToManyColumnMap = it.next();
+			ColumnOneToManyMap oneToManyColumnMap = it.next();
 			insertIntoDatabase(object,oneToManyColumnMap);
 		}
 	}
 	
-	protected void insertIntoDatabase(T object,OneToManyColumnMap oneToManyColumnMap){
+	protected void insertIntoDatabase(T object,ColumnOneToManyMap oneToManyColumnMap){
 		String sql = oneToManyColumnMap.insertSQL();
 		Iterator<?> it = ((List<?>)oneToManyColumnMap.getValue(object)).iterator();
 		while(it.hasNext()){
@@ -220,7 +220,7 @@ public class BaseMapper<T extends DomainObject> {
 		try {
 			int argCount = 1;
 			PreparedStatement stat = conn.prepareStatement(sql);
-			for(Iterator<OneToOneColumnMap> it = tableMap.getOneToOneColumns();it.hasNext();){
+			for(Iterator<ColumnOneToOneMap> it = tableMap.getOneToOneColumns();it.hasNext();){
 				stat.setObject(argCount++ , it.next().getValue(object));
 			}
 			stat.setObject(argCount++,tableMap.primaryKeyValue(object));
@@ -255,8 +255,8 @@ public class BaseMapper<T extends DomainObject> {
 	}
 	
 	protected void deleteOneToManyColumns(T object){
-		for(Iterator<OneToManyColumnMap> it = tableMap.getOneToManyColumns();it.hasNext();){
-			OneToManyColumnMap oneToManyColumnMap = it.next();
+		for(Iterator<ColumnOneToManyMap> it = tableMap.getOneToManyColumns();it.hasNext();){
+			ColumnOneToManyMap oneToManyColumnMap = it.next();
 			String sql = oneToManyColumnMap.deleteSQL();
 			deleteBySql(object,sql);
 		}
