@@ -123,7 +123,14 @@ public class ArticleService {
 	}
 
 	public void draft(long articleId, String username, String password) {
-
+		if(userService.verify(username, password) && userService.hasAuth(username, AuthConstant.ARTICLE_MANAGER)){
+			UnitOfWork.newCurrent();
+			Article article = RepositoryRegister.getArticleRepository().get(articleId);
+			RepositoryRegister.getArticleRepository().delete(article);
+			UnitOfWork.getCurrent().commit();
+		}else{
+			throw new AuthException(AuthConstant.ARTICLE_MANAGER);
+		}
 	}
 
 	public void recyle(int id, String username, String password) {

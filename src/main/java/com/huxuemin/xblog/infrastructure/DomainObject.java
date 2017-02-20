@@ -28,4 +28,8 @@ public abstract class DomainObject {
 			uok.registerRemoved(this);
 		}
 	}
+	
+	public void delete(){
+		markRemoved();
+	}
 }

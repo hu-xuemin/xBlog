@@ -166,11 +166,7 @@
                     dataType:'json',
                     data:{"articleTitle":title,"articleContent":text},
                     success: function(data){
-                        if(data.statusValue > 0){
-                            $("#divError").show().html(data.msg);
-                        }else {
-                            $("#divError").show().html(data.msg);
-                        }
+                        $("#divError").show().html("OK");
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown){
                         $("#divError").show().html(XMLHttpRequest.responseJSON.message);

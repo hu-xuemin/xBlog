@@ -1,7 +1,7 @@
 package com.huxuemin.xblog.infrastructure;
 
 /**
- * @author huxuemin 2016��8��25��
+ * @author huxuemin
  *
  */
 public enum AuthConstant {

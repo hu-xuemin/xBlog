@@ -67,4 +67,5 @@ public class Discuss extends DomainObject {
 		// TODO Auto-generated method stub
 		return this.articleId;
 	}
+	
 }

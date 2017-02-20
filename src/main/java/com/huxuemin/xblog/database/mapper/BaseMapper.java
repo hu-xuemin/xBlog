@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.huxuemin.xblog.database.DBConnectionFactory;
+import com.huxuemin.xblog.domain.repository.UnitOfWork;
 import com.huxuemin.xblog.infrastructure.DomainObject;
 
 public class BaseMapper<T extends DomainObject> {
@@ -148,7 +149,7 @@ public class BaseMapper<T extends DomainObject> {
 	
 	public void insert(T object){
 		String sql = "INSERT INTO " + tableMap.getTableName() + "(" + tableMap.columnList() + ") " + "VALUES (" + tableMap.insertList() + ")";
-		Connection conn = DBConnectionFactory.getConnection();
+		Connection conn = UnitOfWork.getCurrent().getConnection();
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			int argCount = 1;
@@ -163,13 +164,6 @@ public class BaseMapper<T extends DomainObject> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
@@ -191,7 +185,7 @@ public class BaseMapper<T extends DomainObject> {
 	}
 	
 	protected void insertOneRow(Object primaryKeyValue,Object foreignKeyColumnValue,String sql){
-		Connection conn = DBConnectionFactory.getConnection();
+		Connection conn = UnitOfWork.getCurrent().getConnection();
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setObject(1, primaryKeyValue);
@@ -204,19 +198,12 @@ public class BaseMapper<T extends DomainObject> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
 	public void update(T object){
 		String sql = "UPDATE " + tableMap.getTableName() + tableMap.updateList() + " WHERE " + tableMap.primaryKeyWhereClause();
-		Connection conn =DBConnectionFactory.getConnection();
+		Connection conn =UnitOfWork.getCurrent().getConnection();
 		try {
 			int argCount = 1;
 			PreparedStatement stat = conn.prepareStatement(sql);
@@ -232,13 +219,6 @@ public class BaseMapper<T extends DomainObject> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -264,7 +244,7 @@ public class BaseMapper<T extends DomainObject> {
 	
 	private boolean deleteBySql(T object,String sql){
 		boolean result = false;
-		Connection conn = DBConnectionFactory.getConnection();
+		Connection conn = UnitOfWork.getCurrent().getConnection();
 		PreparedStatement stat;
 		try {
 			stat = conn.prepareStatement(sql);
@@ -278,13 +258,6 @@ public class BaseMapper<T extends DomainObject> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		return result;
 	}
