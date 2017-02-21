@@ -75,6 +75,8 @@ public class ArticleService {
 						article.replyDiscuss(username, discussid, content));
 				UnitOfWork.getCurrent().commit();
 				return discuss;
+			}else{
+				throw new ArticleNotFoundException();
 			}
 		}
 		throw new AuthException(AuthConstant.PUBLIC_DISCUSS);
@@ -82,15 +84,29 @@ public class ArticleService {
 
 	public List<DiscussDTO> getAllDiscuss(long articleId) {
 		Article article = RepositoryRegister.getArticleRepository().get(articleId);
-		return ArticleFactory.createDiscussDTOs(article, 0, article.numberOfDiscuss());
+		if (article != null) {
+			return ArticleFactory.createDiscussDTOs(article, 0, article.numberOfDiscuss());
+		} else {
+			throw new ArticleNotFoundException();
+		}
 	}
 
 	public int numberOfDiscuss(long articleId) {
-		return RepositoryRegister.getArticleRepository().get(articleId).numberOfDiscuss();
+		Article article = RepositoryRegister.getArticleRepository().get(articleId);
+		if (article != null) {
+			return article.numberOfDiscuss();
+		} else {
+			throw new ArticleNotFoundException();
+		}
 	}
 
 	public List<DiscussDTO> getDiscuss(long articleId, int begin, int end) {
-		return ArticleFactory.createDiscussDTOs(RepositoryRegister.getArticleRepository().get(articleId), begin, end);
+		Article article = RepositoryRegister.getArticleRepository().get(articleId);
+		if (article != null) {
+			return ArticleFactory.createDiscussDTOs(article, begin, end);
+		} else {
+			throw new ArticleNotFoundException();
+		}
 	}
 
 	public List<DiscussDTO> getDiscuss(long articleId, int pagenumber) {
@@ -103,7 +119,12 @@ public class ArticleService {
 	}
 
 	public int totalPageOfDiscuss(long articleId) {
-		return (RepositoryRegister.getArticleRepository().get(articleId).numberOfDiscuss() + 9) / 10;
+		Article article = RepositoryRegister.getArticleRepository().get(articleId);
+		if (article != null) {
+			return (article.numberOfDiscuss() + 9) / 10;
+		} else {
+			throw new ArticleNotFoundException();
+		}
 	}
 
 	public void top(int id, long time, String username, String password) {
@@ -123,12 +144,16 @@ public class ArticleService {
 	}
 
 	public void draft(long articleId, String username, String password) {
-		if(userService.verify(username, password) && userService.hasAuth(username, AuthConstant.ARTICLE_MANAGER)){
-			UnitOfWork.newCurrent();
+		if (userService.verify(username, password) && userService.hasAuth(username, AuthConstant.ARTICLE_MANAGER)) {
 			Article article = RepositoryRegister.getArticleRepository().get(articleId);
-			RepositoryRegister.getArticleRepository().delete(article);
-			UnitOfWork.getCurrent().commit();
-		}else{
+			if (article != null) {
+				UnitOfWork.newCurrent();
+				RepositoryRegister.getArticleRepository().delete(article);
+				UnitOfWork.getCurrent().commit();
+			}else{
+				throw new ArticleNotFoundException();
+			}
+		} else {
 			throw new AuthException(AuthConstant.ARTICLE_MANAGER);
 		}
 	}
