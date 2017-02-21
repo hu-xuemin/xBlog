@@ -2,18 +2,18 @@
 <html>
 <head lang="en">
 <meta charset="UTF-8">
-<link href="./../css/bootstrap-theme.min.css" rel="stylesheet"
+<link href="/css/bootstrap-theme.min.css" rel="stylesheet"
 	type="text/css" />
-<link href="./../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="./../css/bootstrap-combined.min.css" rel="stylesheet"
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/css/bootstrap-combined.min.css" rel="stylesheet"
 	type="text/css" media="screen" />
-<link href="./../css/font-awesome.css" rel="stylesheet" type="text/css" />
-<link href="./../css/default-home.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="./../images/Home.ico" />
-<script type="text/javascript" src="./../js/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="./../js/jquery-ui.js"></script>
-<script type="text/javascript" src="./../js/default-main.js"></script>
-<script type="text/javascript" src="./../js/jquery.base64.js"></script>
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="/css/default-home.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/images/Home.ico" />
+<script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/default-main.js"></script>
+<script type="text/javascript" src="/js/jquery.base64.js"></script>
 <title>心有猛虎，细嗅蔷薇</title>
 </head>
 <body>
@@ -29,14 +29,13 @@
 				</div>
 				<div id="login_register">
 					<p class="navbar-text pull-right">
-						<a href="login" class="navbar-link">登录</a> <a
-							href="register" class="navbar-link">注册</a>
+						<a href="login" class="navbar-link">登录</a> <a href="register"
+							class="navbar-link">注册</a>
 					</p>
 				</div>
 				<h3>心有猛虎，细嗅蔷薇</h3>
 				<ul class="breadcrumb">
-					<li><a href="../index">主页</a> <span class="divider">/</span>
-					</li>
+					<li><a href="../index">主页</a> <span class="divider">/</span></li>
 					<li><a href="../index">Blog</a> <span class="divider">/</span>
 					</li>
 					<li id="articleTitle" class="active">用户信息</li>
@@ -208,8 +207,7 @@
 							<label class="control-label">性别</label>
 
 							<div class="controls">
-								<select name="sex" id="sex" class="input-xlarge"
-									disabled="true">
+								<select name="sex" id="sex" class="input-xlarge" disabled="true">
 									<option value="man">男</option>
 									<option value="women">女</option>
 								</select>
@@ -239,74 +237,115 @@
 	</div>
 	<script>
 		var username;
-		$(document).ready(function() {
-			username = $.simpleBlog.getUserName();
-			if (username) {
-				$.ajax({
-					url : "../api/user/" + username,
-					type : "GET",
-					dataType : 'json',
-					data : {},
-					success : function(data) {
-	                    $("#user_info").attr("action","../api/user/"+username);
-						$("#username").val(data.userName);
-						$("#firstname").val(data.firstName);
-						$("#lastname").val(data.lastName);
-						$("#lang").attr('value', data.lang);
-						$("#country").val(data.country);
-						$("#sex").attr('value', data.sex);
-						$("#qq").val(data.qq);
-						$("#phonenum").val(data.phoneNum);
-						$("#wechat").val(data.wechat);
-						$("#email").val(data.email);
-						$("#profile").val(data.profile);
-						$("#profession").val(data.profession);
-					},
-					error : function() {
-						$("#divError").show().html("user不存在！");
-					}
-				});
-			} else {
-				$("#divError").show().html("用户不存在！");
-			}
+		$(document)
+				.ready(
+						function() {
+							username = $.simpleBlog.getUserName();
+							if (username) {
+								$.ajax({
+									url : "../api/user/" + username,
+									type : "GET",
+									dataType : 'json',
+									data : {},
+									success : function(data) {
+										$("#user_info").attr("action",
+												"../api/user/" + username);
+										$("#username").val(data.userName);
+										$("#firstname").val(data.firstName);
+										$("#lastname").val(data.lastName);
+										$("#lang").attr('value', data.lang);
+										$("#country").val(data.country);
+										$("#sex").attr('value', data.sex);
+										$("#qq").val(data.qq);
+										$("#phonenum").val(data.phoneNum);
+										$("#wechat").val(data.wechat);
+										$("#email").val(data.email);
+										$("#profile").val(data.profile);
+										$("#profession").val(data.profession);
+									},
+									error : function() {
+										$("#divError").show().html("user不存在！");
+									}
+								});
+							} else {
+								$("#divError").show().html("用户不存在！");
+							}
 
-			$("#edit").click(function() {
-				$.ajax({
-					url : "../api/user/" + username + "/canedit",
-					type : "GET",
-					dataType : 'json',
-					data : {},
-					success : function(data) {
-						$("#firstname").attr("readonly", false);
-						$("#lastname").attr("readonly", false);
-						$("#lang").attr('disabled', false);
-						$("#country").attr("readonly", false);
-						$("#sex").attr("disabled", false);
-						$("#qq").attr("readonly", false);
-						$("#phonenum").attr("readonly", false);
-						$("#wechat").attr("readonly", false);
-						$("#email").attr("readonly", false);
-						$("#profile").attr("readonly", false);
-						$("#profession").attr("readonly", false);
-						$("#save").attr("disabled", false);
-					},
-					complete : function(XMLHttpRequest, textStatus) {
-					}
-				});
-			});
-			$("#user_info").asynSubmit({
-				beforeSubmit : function() {
-					return true;
-				},
-				successSubmit : function(data) {
-						$("#divError").show().html("保存成功！");
-				},
-		        errorSubmit:function(XMLHttpRequest, textStatus, errorThrown){
-                    $("#divError").show().html(XMLHttpRequest.responseJSON.message);
-		        }
-			});
-			$.simpleBlog.refreshUserNameArea();
-		});
+							$("#edit").click(
+									function() {
+										$
+												.ajax({
+													url : "../api/user/"
+															+ username
+															+ "/canedit",
+													type : "GET",
+													dataType : 'json',
+													data : {},
+													success : function(data) {
+														$("#firstname").attr(
+																"readonly",
+																false);
+														$("#lastname").attr(
+																"readonly",
+																false);
+														$("#lang").attr(
+																'disabled',
+																false);
+														$("#country").attr(
+																"readonly",
+																false);
+														$("#sex").attr(
+																"disabled",
+																false);
+														$("#qq").attr(
+																"readonly",
+																false);
+														$("#phonenum").attr(
+																"readonly",
+																false);
+														$("#wechat").attr(
+																"readonly",
+																false);
+														$("#email").attr(
+																"readonly",
+																false);
+														$("#profile").attr(
+																"readonly",
+																false);
+														$("#profession").attr(
+																"readonly",
+																false);
+														$("#save").attr(
+																"disabled",
+																false);
+													},
+													complete : function(
+															XMLHttpRequest,
+															textStatus) {
+													}
+												});
+									});
+							$("#user_info")
+									.asynSubmit(
+											{
+												beforeSubmit : function() {
+													return true;
+												},
+												successSubmit : function(data) {
+													$("#divError").show().html(
+															"保存成功！");
+												},
+												errorSubmit : function(
+														XMLHttpRequest,
+														textStatus, errorThrown) {
+													$("#divError")
+															.show()
+															.html(
+																	XMLHttpRequest.responseJSON.message);
+												}
+											});
+							$.simpleBlog.refreshUserNameArea();
+						});
 	</script>
 </body>
 </html>

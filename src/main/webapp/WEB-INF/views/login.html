@@ -1,114 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="css/default-home.css" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" href="images/Home.ico"/>
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/default-main.js"></script>
-    <title>心有猛虎，细嗅蔷薇</title>
+<meta charset="UTF-8">
+<link href="/css/bootstrap-theme.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/css/bootstrap-combined.min.css" rel="stylesheet"
+	type="text/css" media="screen" />
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="/css/default-home.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/images/Home.ico" />
+<script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/default-main.js"></script>
+<script type="text/javascript" src="/js/jquery.base64.js"></script>
+<title>心有猛虎，细嗅蔷薇</title>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12">
-            <h3>
-                心有猛虎，细嗅蔷薇
-            </h3>
-            <ul class="breadcrumb">
-                <li>
-                    <a href="index">主页</a> <span class="divider">/</span>
-                </li>
-                <li>
-                    <a href="index">Blog</a> <span class="divider">/</span>
-                </li>
-                <li class="active">
-                    登录
-                </li>
-            </ul>
-            <div id="main" class="nosidebar">
-                <div id="content">
-                    <div id="divError" class="clsError"></div>
-                    <div id="login-form">
-                        <form id="lf" action="api/login" accept-charset="UTF-8" method="post">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td style="text-align: right;">
-                                        <label for="loginid">登录名:</label>
-                                    </td>
-                                    <td style="text-align: left;">
-                                        <div id="loginid_div" class="control-group">
-                                            <div class="controls">
-                                                <input name="loginId" id="loginid" tabindex="1" placeholder="用户名" type="text">
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">
-                                        <label for="password">密码:</label>
-                                    </td>
-                                    <td style="text-align: left;">
-                                        <div id="password_div"  class="control-group">
-                                            <div class="controls">
-                                                <input name="password" id="password" tabindex="2" placeholder="密码" type="password">
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td style="text-align: left;"></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;">
-                                        <a href="register.html">注册</a>
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input name="login" value="登录 »" tabindex="5" type="submit">
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
-                    <script>
-                        //<![CDATA[
-                        $('#loginid').focus();
-                        //]]>
-                    </script>
-                    <div style="clear: both;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<h3>心有猛虎，细嗅蔷薇</h3>
+				<ul class="breadcrumb">
+					<li><a href="index">主页</a> <span class="divider">/</span></li>
+					<li><a href="index">Blog</a> <span class="divider">/</span></li>
+					<li class="active">登录</li>
+				</ul>
+				<div id="main" class="nosidebar">
+					<div id="content">
+						<div id="divError" class="clsError"></div>
+						<div id="login-form">
+							<form id="lf" action="api/login" accept-charset="UTF-8"
+								method="post">
+								<table>
+									<tbody>
+										<tr>
+											<td style="text-align: right;"><label for="loginid">登录名:</label>
+											</td>
+											<td style="text-align: left;">
+												<div id="loginid_div" class="control-group">
+													<div class="controls">
+														<input name="loginId" id="loginid" tabindex="1"
+															placeholder="用户名" type="text">
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td style="text-align: right;"><label for="password">密码:</label>
+											</td>
+											<td style="text-align: left;">
+												<div id="password_div" class="control-group">
+													<div class="controls">
+														<input name="password" id="password" tabindex="2"
+															placeholder="密码" type="password">
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td style="text-align: left;"></td>
+										</tr>
+										<tr>
+											<td style="text-align: left;"><a href="register.html">注册</a>
+											</td>
+											<td style="text-align: right;"><input name="login"
+												value="登录 »" tabindex="5" type="submit"></td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+						<script>
+							//<![CDATA[
+							$('#loginid').focus();
+							//]]>
+						</script>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script>
-    $(document).ready(function () {
-        $("#lf").asynSubmit({
-            beforeSubmit: function () {
-                return true;
-            },
-            successSubmit: function (data) {
-                $("#divError").show().html("恭喜您登录成功，正在为您跳转到上一个浏览页面...");
-                $.simpleBlog.jump(4,"index");
-                $("#login-form").hide();
-            },
-            errorSubmit:function(XMLHttpRequest, textStatus, errorThrown){
-                $("#divError").show().html(XMLHttpRequest.responseJSON.message);
-                $("#loginid").val("").focus();
-                $("#loginid_div").addClass("error");
-                $("#password").val("");
-                $("#password_div").addClass("error");
-            }
-        });
-    });
-</script>
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$("#lf")
+									.asynSubmit(
+											{
+												beforeSubmit : function() {
+													return true;
+												},
+												successSubmit : function(data) {
+													$("#divError")
+															.show()
+															.html(
+																	"恭喜您登录成功，正在为您跳转到上一个浏览页面...");
+													$.simpleBlog.jump(4,
+															"index");
+													$("#login-form").hide();
+												},
+												errorSubmit : function(
+														XMLHttpRequest,
+														textStatus, errorThrown) {
+													$("#divError")
+															.show()
+															.html(
+																	XMLHttpRequest.responseJSON.message);
+													$("#loginid").val("")
+															.focus();
+													$("#loginid_div").addClass(
+															"error");
+													$("#password").val("");
+													$("#password_div")
+															.addClass("error");
+												}
+											});
+						});
+	</script>
 </body>
 </html>
