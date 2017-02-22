@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/default-home.css" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="/images/Home.ico"/>
+    <script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js/default-main.js"></script>
+    <script type="text/javascript" src="/js/jquery.base64.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <title>心有猛虎，细嗅蔷薇</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="logoutArea" style="display: none;">
+                <p class="navbar-text pull-right">
+                    <a href="#" id="userDisplayName" class="navbar-link">null</a>
+                    <button id="logout" class="btn btn-link">注销</button>
+                </p>
+                <div class="navbar-text  pull-right">欢迎回来！&nbsp&nbsp</div>
+            </div>
+            <div id="login_register">
+                <p class="navbar-text pull-right">
+                    <a href="../login" class="navbar-link">登录</a> <a
+                        href="../register" class="navbar-link">注册</a>
+                </p>
+            </div>
+            <h3>心有猛虎，细嗅蔷薇</h3>
+            <ul class="breadcrumb">
+                <li><a href="../index">主页</a> <span class="divider">/</span></li>
+                <li><a href="../index">Blog</a> <span class="divider">/</span>
+                </li>
+                <li id="articleTitle" class="active">后台管理</li>
+            </ul>
+            <div id="divError" class="clsError"></div>
+            <div class="tabbable tabs-left" id="tabsapi">
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#panelArticle" data-toggle="tab">文章</a>
+                    </li>
+                    <li>
+                        <a href="#panelDiscuss" data-toggle="tab">评论</a>
+                    </li>
+                    <li>
+                        <a href="#panelUser" data-toggle="tab">用户</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panelArticle">
+
+                    </div>
+                    <div class="tab-pane" id="panelDiscuss">
+
+                    </div>
+                    <div class="tab-pane" id="panelUser">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(
+        function () {
+            refreshPanelArticle();
+            $.simpleBlog.refreshUserNameArea();
+        });
+
+    function refreshPanelArticle() {
+        $.ajax({
+            url: "/api/articles",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
+                var panelArticle = $("#panelArticle");
+                panelArticle.empty();
+                for (var i = 0; i < data.articles.length; i++) {
+                    var aP = $('<p></p>');
+                    aP.html(
+                        "<a href=\"articles/" + data.articles[i].id + "\"> " + data.articles[i].title + "</a> "
+                        + "<a class=\"btn\" href=\"articles/publish/" + data.articles[i].id + "\">edit</a>"
+                        + "<a class=\"btn\" href=\"javascript:deleteArticle(" + data.articles[i].id + ")\"> delete </a>");
+                    aP.appendTo(panelArticle);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            error: function () {
+                $("#divError").show().html("请求资源错误！");
+            }
+        });
+    }
+
+    function deleteArticle(id) {
+        if (confirm("确认要删除？")) {
+            if (id > 0) {
+                $.ajax({
+                    url: "/api/articles/" + id,
+                    type: "DELETE",
+                    dataType: 'json',
+                    data: {
+                        "articleid": id
+                    },
+                    success: function (data) {
+                        $("#divError").show().html("删除成功！");
+                        refreshPanelArticle();
+                    },
+                    error: function () {
+                        $("#divError").show().html("删除失败！");
+                    }
+                });
+            }
+        }
+    }
+</script>
+</body>
+</html>

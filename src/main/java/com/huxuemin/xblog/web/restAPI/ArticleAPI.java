@@ -93,11 +93,12 @@ public class ArticleAPI {
 
 	@RequestMapping(value = "/{articleId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteAricle(@PathVariable long articleId, HttpServletRequest request) {
+	public ResponseEntity<String> deleteAricle(@PathVariable long articleId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute(SessionConstant.USERNAME);
 		String password = (String) session.getAttribute(SessionConstant.PASSWORD);
 		articleService.draft(articleId, userName, password);
+		return new ResponseEntity<String>("{\"message\":\"ok\"}",HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{articleId}/discuss", method = RequestMethod.GET, produces = { "application/json",
