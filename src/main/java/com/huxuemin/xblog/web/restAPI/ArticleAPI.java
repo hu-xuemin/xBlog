@@ -153,25 +153,25 @@ public class ArticleAPI {
 
 	@ExceptionHandler(DiscussNotFoundException.class)
 	public ResponseEntity<ErrorMessage> discussNotFoundException(DiscussNotFoundException exception) {
-		ErrorMessage error = new ErrorMessage(1, exception.toString());
+		ErrorMessage error = new ErrorMessage(1, exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(error, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(ArticleNotFoundException.class)
 	public ResponseEntity<ErrorMessage> articleNotFoundException(ArticleNotFoundException exception) {
-		ErrorMessage error = new ErrorMessage(1, exception.toString());
+		ErrorMessage error = new ErrorMessage(1, exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(error, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(AuthException.class)
 	public ResponseEntity<ErrorMessage> authException(AuthException authException) {
-		ErrorMessage error = new ErrorMessage(1, authException.toString());
+		ErrorMessage error = new ErrorMessage(1, authException.getMessage());
 		return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
 	}
 
 	@ExceptionHandler(UserVerifyFailedException.class)
 	public ResponseEntity<ErrorMessage> userVerifyFailedException(UserVerifyFailedException exception) {
-		ErrorMessage error = new ErrorMessage(1, exception.toString());
+		ErrorMessage error = new ErrorMessage(1, exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
 	}
 

@@ -27,7 +27,7 @@ public abstract class IRepository<T extends DomainObject> {
 		if(domainObject != null){
 			add(domainObject);
 		}
-		System.out.println(domainObject);
+//		System.out.println(domainObject);
 		return domainObject;
 	}
 	

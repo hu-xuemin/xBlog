@@ -7,8 +7,8 @@ public class ArticleNotFoundException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = 8446139906935067570L;
 	
-	@Override
-	public String toString(){
-		return "Article not found!";
+	public ArticleNotFoundException(){
+	    super("Article not found!");
 	}
+	
 }

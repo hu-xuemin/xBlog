@@ -6,8 +6,8 @@ import java.util.Iterator;
 
 class ConnectionPool {
 //	private final static String TAG = "ConnectionPool";
-	private static ArrayList<ConnectionAdapter> idleConnection = new ArrayList<>();
-	private static ArrayList<ConnectionAdapter> usedConnection = new ArrayList<>();
+	private static ArrayList<ConnectionAdapter> idleConnection = new ArrayList<ConnectionAdapter>();
+	private static ArrayList<ConnectionAdapter> usedConnection = new ArrayList<ConnectionAdapter>();
 	
 	public ConnectionPool(){}
 	

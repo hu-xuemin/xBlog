@@ -94,19 +94,19 @@ public class UserAPI {
 
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ErrorMessage> userNotFoundException(UserNotFoundException exception) {
-		ErrorMessage errorMessage = new ErrorMessage(1, exception.toString());
+		ErrorMessage errorMessage = new ErrorMessage(1, exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(AuthException.class)
 	public ResponseEntity<ErrorMessage> authException(AuthException authException) {
-		ErrorMessage error = new ErrorMessage(1, authException.toString());
+		ErrorMessage error = new ErrorMessage(1, authException.getMessage());
 		return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
 	}
 
 	@ExceptionHandler(UserVerifyFailedException.class)
 	public ResponseEntity<ErrorMessage> userVerifyFailedException(UserVerifyFailedException exception) {
-		ErrorMessage error = new ErrorMessage(1, exception.toString());
+		ErrorMessage error = new ErrorMessage(1, exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
 	}
 }

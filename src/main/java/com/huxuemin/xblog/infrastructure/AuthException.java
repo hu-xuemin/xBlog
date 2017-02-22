@@ -6,15 +6,11 @@ public class AuthException extends RuntimeException {
 	private AuthConstant auth;
 	
 	public AuthException(AuthConstant ac){
+	    super("non-Auth:" + ac.descOfAuth());
 		this.auth = ac;
 	}
 	
 	public AuthConstant getAuthConstant(){
 		return this.auth;
-	}
-	
-	@Override
-	public String toString(){
-		return "non-Auth:" + auth.descOfAuth();
 	}
 }

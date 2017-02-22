@@ -69,13 +69,13 @@ public class LoginAPI {
 	
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ErrorMessage> userNotFoundException(UserNotFoundException exception){
-		ErrorMessage errorMessage = new ErrorMessage(1,exception.toString());
+		ErrorMessage errorMessage = new ErrorMessage(1,exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(errorMessage,HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(UserVerifyFailedException.class)
 	public ResponseEntity<ErrorMessage> userVerifyFailedException(UserVerifyFailedException exception){
-		ErrorMessage errorMessage = new ErrorMessage(1,exception.toString());
+		ErrorMessage errorMessage = new ErrorMessage(1,exception.getMessage());
 		return new ResponseEntity<ErrorMessage>(errorMessage,HttpStatus.FORBIDDEN);
 	}
 
