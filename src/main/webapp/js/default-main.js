@@ -61,7 +61,7 @@
     };
 
     $.simpleBlog.getArticleId = function (){
-        var reg = new RegExp(".*/articles/(\\\d+)(?=(?:/|\\\?|\\\.|$)).*","");
+        var reg = new RegExp(".*/article/(\\\d+)(?=(?:/|\\\?|\\\.|$)).*","");
         var r = window.location.pathname.match(reg);
         if(r!=null){
             return r[1];
@@ -105,14 +105,14 @@
             dataType: 'json',
             data: {},
             success: function (data) {
-                $("#login_register").hide();
-                $("#logoutArea").show();
+                $("#login_register").removeClass("show").addClass("hide");
+                $("#logoutArea").removeClass("hide").addClass("show");
                 $("#userDisplayName").attr("href","/user/"+$.trim(data.userName));
                 $("#userDisplayName").text(data.displayName);
             },
             error: function() {
-                $("#login_register").show();
-                $("#logoutArea").hide();
+                $("#logoutArea").removeClass("show").addClass("hide");
+                $("#login_register").removeClass("hide").addClass("show");
                 $("#userDisplayName").attr("href","#");
                 $("#userDisplayName").text("");
             }
@@ -125,8 +125,8 @@
                 dataType: 'json',
                 data: {},
                 success: function () {
-                    $("#login_register").show();
-                    $("#logoutArea").hide();
+                    $("#logoutArea").removeClass("show").addClass("hide");
+                    $("#login_register").removeClass("hide").addClass("show");
                     $("#userDisplayName").attr("href","#");
                     $("#userDisplayName").text("");
                 },

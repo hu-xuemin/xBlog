@@ -2,93 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/default-home.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/xblog.css">
     <link rel="shortcut icon" href="/images/Home.ico"/>
-    <script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/npm.js"></script>
     <script type="text/javascript" src="/js/default-main.js"></script>
-    <script type="text/javascript" src="/js/jquery.base64.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <title>心有猛虎，细嗅蔷薇</title>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12">
-            <div id="logoutArea" style="display: none;">
-                <p class="navbar-text pull-right">
-                    <a href="#" id="userDisplayName" class="navbar-link">null</a>
-                    <button id="logout" class="btn btn-link">注销</button>
-                </p>
-                <div class="navbar-text  pull-right">欢迎回来！&nbsp&nbsp</div>
-            </div>
-            <div id="login_register">
-                <p class="navbar-text pull-right">
-                    <a href="../login" class="navbar-link">登录</a> <a
-                        href="../register" class="navbar-link">注册</a>
-                </p>
-            </div>
-            <h3>心有猛虎，细嗅蔷薇</h3>
-            <ul class="breadcrumb">
-                <li><a href="../index">主页</a> <span class="divider">/</span></li>
-                <li><a href="../index">Blog</a> <span class="divider">/</span>
-                </li>
-                <li id="articleTitle" class="active">API</li>
-            </ul>
-            <h4>当前支持xml、json格式。例： <a href="http://www.huxuemin.com/api/articles.xml">http://www.huxuemin.com/api/articles.xml</a> 、<a href="http://www.huxuemin.com/api/articles.json">http://www.huxuemin.com/api/articles.json</a> </h4>
-            <div class="tabbable" id="tabsapi">
-                <ul id="myTab" class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#panelArticle" data-toggle="tab">文章</a>
-                    </li>
-                    <li>
-                        <a href="#panelDiscuss" data-toggle="tab">评论</a>
-                    </li>
-                    <li>
-                        <a href="#panelUser" data-toggle="tab">用户</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="panelArticle">
-                        <p>
-                            文章目录: /api/articles。
-                            支持方法：get:获取文章目录。
-                        </p>
-                        <p>
-                            文章：/api/articles/{articleId}。例：/api/articles/11804505069905。
-                            支持方法：get:获取文章。
-                        </p>
-                    </div>
-                    <div class="tab-pane" id="panelDiscuss">
-                        <p>
-                            评论：/api/articles/{articleId}/discuss/{discussId}。
-                        </p>
-                        <p>
-                            评论页面数：/api/articles/{articleId}/discuss/page。每页10条评论。
-                        </p>
-                        <p>
-                            获取一页评论：/api/articles/{articleId}/discuss/page／{number}。每页10条评论。
-                        </p>
-                    </div>
-                    <div class="tab-pane" id="panelUser">
-                        <p>
-                            用户登录信息：/api/login
-                        </p>
-                        <p>
-                            用户信息：/api/user/{username}。
-                        </p>
-                        <p>
-                            判断是否具有修改用户资料权限：/api/user/{username}/canedit
-                        </p>
-                    </div>
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/index.html">主页</a>
+            <a class="blog-nav-item" href="/index.html">文章</a>
+            <a class="blog-nav-item active" href="/api.html">API</a>
+
+            <div class="blog-nav-login-status">
+                <div id="logoutArea" class="hide">
+                    <a href="#" id="userDisplayName" class="blog-nav-item">null</a>
+                    <span class="welcome-title">欢迎回来！&nbsp&nbsp</span>
+                    <a href="#" id="logout" class="blog-nav-item">注销</a>
+                </div>
+                <div id="login_register" class="show">
+                    <a href="/login.html" class="blog-nav-item">登录</a>
+                    <a href="/register.html" class="blog-nav-item">注册</a>
                 </div>
             </div>
-        </div>
+        </nav>
     </div>
 </div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">心有猛虎，细嗅蔷薇</h1>
+        <p class="lead blog-description">写点代码虚度光阴.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 blog-main">
+            <div class="blog-post">
+                <h4>当前支持xml、json格式。例： <a href="http://www.huxuemin.com/api/articles.xml">http://www.huxuemin.com/api/articles.xml</a>
+                    、<a href="http://www.huxuemin.com/api/articles.json">http://www.huxuemin.com/api/articles.json</a>
+                </h4>
+                <div class="blog-post-content">
+                    <div>
+                        <ul id="myTab" class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#panelArticle" data-toggle="tab">文章</a>
+                            </li>
+                            <li>
+                                <a href="#panelDiscuss" data-toggle="tab">评论</a>
+                            </li>
+                            <li>
+                                <a href="#panelUser" data-toggle="tab">用户</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane active" id="panelArticle">
+                                <p>
+                                    文章目录: /api/articles。
+                                    支持方法：get:获取文章目录。
+                                </p>
+                                <p>
+                                    文章：/api/articles/{articleId}。例：/api/articles/11804505069905。
+                                    支持方法：get:获取文章。
+                                </p>
+                            </div>
+                            <div class="tab-pane" id="panelDiscuss">
+                                <p>
+                                    评论：/api/articles/{articleId}/discuss/{discussId}。
+                                </p>
+                                <p>
+                                    评论页面数：/api/articles/{articleId}/discuss/page。每页10条评论。
+                                </p>
+                                <p>
+                                    获取一页评论：/api/articles/{articleId}/discuss/page／{number}。每页10条评论。
+                                </p>
+                            </div>
+                            <div class="tab-pane" id="panelUser">
+                                <p>
+                                    用户登录信息：/api/login
+                                </p>
+                                <p>
+                                    用户信息：/api/user/{username}。
+                                </p>
+                                <p>
+                                    判断是否具有修改用户资料权限：/api/user/{username}/canedit
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.blog-post -->
+        </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+<script>
+    $(document).ready(
+        function () {
+            $.simpleBlog.refreshUserNameArea();
+        });
+</script>
 </body>
 </html>
+

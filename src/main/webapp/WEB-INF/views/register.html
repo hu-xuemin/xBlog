@@ -1,186 +1,148 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-<meta charset="UTF-8">
-<link href="/css/bootstrap-theme.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="/css/bootstrap-combined.min.css" rel="stylesheet"
-	type="text/css" media="screen" />
-<link href="/css/font-awesome.css" rel="stylesheet" type="text/css" />
-<link href="/css/default-home.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="/images/Home.ico" />
-<script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui.js"></script>
-<script type="text/javascript" src="/js/default-main.js"></script>
-<script type="text/javascript" src="/js/jquery.base64.js"></script>
-<title>心有猛虎，细嗅蔷薇</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/xblog.css">
+    <link rel="shortcut icon" href="/images/Home.ico"/>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/npm.js"></script>
+    <script type="text/javascript" src="/js/default-main.js"></script>
+    <title>心有猛虎，细嗅蔷薇</title>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span12">
-				<h3>心有猛虎，细嗅蔷薇</h3>
-				<ul class="breadcrumb">
-					<li><a href="index.html">主页</a> <span class="divider">/</span>
-					</li>
-					<li><a href="index.html">Blog</a> <span class="divider">/</span>
-					</li>
-					<li class="active">注册</li>
-				</ul>
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/index.html">主页</a>
+            <a class="blog-nav-item" href="/index.html">文章</a>
+            <a class="blog-nav-item" href="/api">API</a>
 
-				<div id="main" class="nosidebar">
-					<div id="sidebar"></div>
-					<div id="content">
-						<div id="divError" class="clsError"></div>
-						<form class="new_user form-inline" id="new_user" action="api/user"
-							accept-charset="UTF-8" method="post">
-							<div class="box tabular">
-								<div id="user_login_div" class="control-group">
-									<div class="form-group">
-										<label for="user_login"> 登录名<span class="required">
-												* &nbsp;</span>
-										</label> <input size="25" name="user_login" id="user_login"
-											type="text" />
-									</div>
-								</div>
+            <div class="blog-nav-login-status">
+                <div id="logoutArea" class="hide">
+                    <a href="#" id="userDisplayName" class="blog-nav-item">null</a>
+                    <span class="welcome-title">欢迎回来！&nbsp&nbsp</span>
+                    <a href="#" id="logout" class="blog-nav-item">注销</a>
+                </div>
+                <div id="login_register" class="show">
+                    <a href="/login.html" class="blog-nav-item">登录</a>
+                    <a href="/register.html" class="blog-nav-item active">注册</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
 
-								<div id="user_password_div" class="control-group">
-									<div class="form-group">
-										<label for="user_password"> 密码<span class="required">
-												* &nbsp;</span>
-										</label> <input size="25" name="user_password" id="user_password"
-											type="password" /> <em class="info">至少需要 8 个字符。</em>
-									</div>
-								</div>
+<div class="container">
 
-								<div id="user_password_confirm_div" class="control-group">
-									<div class="form-group">
-										<label for="user_password_confirm"> 确认<span
-											class="required"> * &nbsp;</span>
-										</label> <input size="25" name="user_password_confirm"
-											id="user_password_confirm" type="password" />
-									</div>
-								</div>
-								<div class="control-group">
-									<div class="form-group">
-										<a style="margin-left: 60px;" href="login.html">登录</a> <input
-											style="margin-left: 180px;" name="commit" value="提交 »"
-											type="submit">
-									</div>
-								</div>
-							</div>
-						</form>
-						<div style="clear: both;"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="blog-header">
+        <h1 class="blog-title">心有猛虎，细嗅蔷薇</h1>
+        <p class="lead blog-description">写点代码虚度光阴.</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 blog-main">
+            <div class="blog-post">
+                <div class="line"></div>
+                    <div id="content" class="blog-register-content">
+                        <div id="divError" class="clsError"></div>
+                        <form class="new_user form-inline" id="new_user" action="api/user"
+                              accept-charset="UTF-8" method="post">
+                            <div class="blog-register-box blog-register-tabular">
+                                <div id="user_login_div" class="control-group">
+                                    <div class="form-group">
+                                        <label for="user_login"> 登录名<span class="required">
+                                                * &nbsp;</span>
+                                        </label> <input size="25" name="user_login" id="user_login"
+                                                        type="text"/>
+                                    </div>
+                                </div>
 
-	<script>
-		$(document)
-				.ready(
-						function() {
-							$("#new_user")
-									.asynSubmit(
-											{
-												beforeSubmit : function() {
-													var username = $(
-															"#user_login")
-															.val();
-													var password = $(
-															"#user_password")
-															.val();
-													var password2 = $(
-															"#user_password_confirm")
-															.val();
-													var loginReg = /^[a-zA-Z][a-zA-Z0-9_]*$/;
-													if (username.length < 5
-															|| username
-																	.match(loginReg) == null) {
-														$("#user_login")
-																.val("")
-																.focus();
-														$("#user_login_div")
-																.addClass(
-																		"error");
-														$("#divError")
-																.show()
-																.html(
-																		"用户名至少含有字符、数字或下划线！");
-														return false;
-													}
-													if (password == password2) {
-														var passwordReg = /^[a-zA-Z](?:[\S]*[0-9_])+[\S]*$/;
-														if (password.length < 5
-																|| password
-																		.match(passwordReg) == null) {
-															$("#user_password")
-																	.val("")
-																	.focus();
-															$(
-																	"#user_password_div")
-																	.addClass(
-																			"error");
-															$(
-																	"#user_password_confirm")
-																	.val("");
-															$(
-																	"#user_password_confirm_div")
-																	.addClass(
-																			"error");
-															$("#divError")
-																	.show()
-																	.html(
-																			"密码名至少由字符、数字或下划线两者组合，请重新输入！");
-															return false;
-														}
-													} else {
-														$("#user_password")
-																.val("")
-																.focus();
-														$("#user_password_div")
-																.addClass(
-																		"error");
-														$(
-																"#user_password_confirm")
-																.val("");
-														$(
-																"#user_password_confirm_div")
-																.addClass(
-																		"error");
-														$("#divError")
-																.show()
-																.html(
-																		"两次输入密码不一致，请重新输入！");
-														return false;
-													}
-													return true;
-												},
-												successSubmit : function(data) {
-													$("#divError")
-															.show()
-															.html(
-																	"恭喜您注册成功，正在为您跳转到登录页面...");
-													$.simpleBlog.jump(3,
-															"login.html");
-													$("#new_user").hide();
-												},
-												errorSubmit : function(
-														XMLHttpRequest,
-														textStatus, errorThrown) {
-													$("#user_login").val("")
-															.focus();
-													$("#user_login_div")
-															.addClass("error");
-													$("#divError")
-															.show()
-															.html(
-																	XMLHttpRequest.responseJSON.message);
-												}
-											});
-						});
-	</script>
+                                <div id="user_password_div" class="control-group">
+                                    <div class="form-group">
+                                        <label for="user_password"> 密码<span class="required">
+                                                * &nbsp;</span>
+                                        </label> <input size="25" name="user_password" id="user_password"
+                                                        type="password"/> <em class="info">至少需要 8 个字符。</em>
+                                    </div>
+                                </div>
+
+                                <div id="user_password_confirm_div" class="control-group">
+                                    <div class="form-group">
+                                        <label for="user_password_confirm"> 确认<span
+                                                class="required"> * &nbsp;</span>
+                                        </label> <input size="25" name="user_password_confirm"
+                                                        id="user_password_confirm" type="password"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <a style="margin-left: 60px;" href="login.html">登录</a> <input
+                                            style="margin-left: 180px;" name="commit" value="提交 »"
+                                            type="submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+<script>
+    $(document).ready(
+        function () {
+            $("#new_user").asynSubmit({
+                beforeSubmit: function () {
+                    var username = $("#user_login").val();
+                    var password = $("#user_password").val();
+                    var password2 = $("#user_password_confirm").val();
+                    var loginReg = /^[a-zA-Z][a-zA-Z0-9_]*$/;
+                    if (username.length < 5 || username .match(loginReg) == null) {
+                        $("#user_login").val("").focus();
+                        $("#user_login_div").addClass("error");
+                        $("#divError").show().html("用户名至少含有字符、数字或下划线！");
+                        return false;
+                    }
+                    if (password == password2) {
+                        var passwordReg = /^[a-zA-Z](?:[\S]*[0-9_])+[\S]*$/;
+                        if (password.length < 5 || password.match(passwordReg) == null) {
+                            $("#user_password").val("").focus();
+                            $("#user_password_div").addClass("error");
+                            $("#user_password_confirm").val("");
+                            $("#user_password_confirm_div").addClass("error");
+                            $("#divError").show().html("密码名至少由字符、数字或下划线两者组合，请重新输入！");
+                            return false;
+                        }
+                    } else {
+                        $("#user_password").val("").focus();
+                        $("#user_password_div").addClass("error");
+                        $("#user_password_confirm").val("");
+                        $("#user_password_confirm_div").addClass("error");
+                        $("#divError").show().html("两次输入密码不一致，请重新输入！");
+                        return false;
+                    }
+                    return true;
+                },
+                successSubmit: function (data) {
+                    $("#divError").show().html("恭喜您注册成功，正在为您跳转到登录页面...");
+                    $.simpleBlog.jump(3,"login.html");
+                    $("#new_user").hide();
+                },
+                errorSubmit: function (XMLHttpRequest,textStatus, errorThrown) {
+                    $("#user_login").val("").focus();
+                    $("#user_login_div").addClass("error");
+                    $("#divError").show().html(XMLHttpRequest.responseJSON.message);
+                }
+            });
+        });
+</script>
 </body>
 </html>
+

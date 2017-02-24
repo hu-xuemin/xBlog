@@ -10,6 +10,6 @@ public class ManagePageController {
     
     @RequestMapping(method=RequestMethod.GET)
     public String register(){
-        return "ManagePage";
+        return "manage";
     }
 }

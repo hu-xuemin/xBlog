@@ -1,65 +1,82 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/default-home.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../css/xblog.css">
     <link rel="shortcut icon" href="/images/Home.ico"/>
-    <script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/npm.js"></script>
     <script type="text/javascript" src="/js/default-main.js"></script>
-    <script type="text/javascript" src="/js/jquery.base64.js"></script>
     <title>心有猛虎，细嗅蔷薇</title>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12">
-            <div id="logoutArea" style="display: none;">
-                <p class="navbar-text pull-right">
-                    <a href="#" id="userDisplayName" class="navbar-link">null</a>
-                    <button id="logout" class="btn btn-link">注销</button>
-                </p>
-                <div class="navbar-text  pull-right">欢迎回来！&nbsp&nbsp</div>
-            </div>
-            <div id="login_register">
-                <p class="navbar-text pull-right">
-                    <a href="../login" class="navbar-link">登录</a> <a
-                        href="../register" class="navbar-link">注册</a>
-                </p>
-            </div>
-            <h3>心有猛虎，细嗅蔷薇 (<a href="/api">API</a> )</h3>
-            <ul class="breadcrumb">
-                <li><a href="../index">主页</a> <span class="divider">/</span></li>
-                <li><a href="../index">Blog</a> <span class="divider">/</span>
-                </li>
-                <li id="articleTitle" class="active">第一篇文章</li>
-            </ul>
-            <div id="divError" class="clsError"></div>
-            <h2 id="articleTitleForContent">
-            </h2>
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/index.html">主页</a>
+            <a class="blog-nav-item active" href="/index">文章</a>
+            <a class="blog-nav-item" href="/api">API</a>
 
-            <div id="articleContent"></div>
-
-            <legend></legend>
-            <legend>评论列表：</legend>
-            <div id="discussArea"></div>
-            <div id="discussPage" class="pagination"></div>
-            <form id="reply" accept-charset="UTF-8" method="post">
-                <fieldset>
-                    <label>发表评论：</label>
-                    <div id="discussError" class="clsError"></div>
-                    <textarea name="content" id="content" class="comments" type="text"></textarea>
-                    <br/>
-                    <button class="btn" type="submit">提交</button>
-                </fieldset>
-            </form>
-        </div>
+            <div class="blog-nav-login-status">
+                <div id="logoutArea" class="hide">
+                    <a href="#" id="userDisplayName" class="blog-nav-item">null</a>
+                    <span class="welcome-title">欢迎回来！&nbsp&nbsp</span>
+                    <a href="#" id="logout" class="blog-nav-item">注销</a>
+                </div>
+                <div id="login_register" class="show">
+                    <a href="/login.html" class="blog-nav-item">登录</a>
+                    <a href="/register.html" class="blog-nav-item">注册</a>
+                </div>
+            </div>
+        </nav>
     </div>
 </div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">心有猛虎，细嗅蔷薇</h1>
+        <p class="lead blog-description">写点代码虚度光阴.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10 blog-main">
+            <div class="blog-post">
+                <div id="articleTitle" class="blog-post-title"></div>
+                <div id="articleContent" class="blog-post-content"></div>
+            </div><!-- /.blog-post -->
+
+            <div class="blog-discuss">
+                <span>评论列表：</span>
+                <div class="line"></div>
+                <div id="discussArea"></div>
+                <div id="discussPage" class="pagination"></div>
+                <form id="reply" accept-charset="UTF-8" method="post">
+                    <fieldset>
+                        <label>发表评论：</label>
+                        <div id="discussError" class="clsError"></div>
+                        <textarea name="content" id="content" class="blog-discuss-comments" type="text"></textarea>
+                        <button type="submit">提交</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<footer class="blog-footer">
+    <p><a href="http://www.miitbeian.gov.cn/">粤ICP备15102090号-1</a> | <a href="mailto:hu-xuemin@qq.com/">联系作者：hu-xuemin@qq.com</a>
+    </p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
+
 <script>
     var articleId = 0;
     var curDiscussPage = 1;
@@ -103,14 +120,13 @@
 
     function loadArticle(id) {
         $.ajax({
-            url: "../api/articles/" + id,
+            url: "../api/article/" + id,
             type: "GET",
             dataType: 'json',
             success: function (data) {
                 $("#reply").attr("action",
-                    "../api/articles/" + id + "/discuss");
-                $("#articleTitle").text(data.articleTitle);
-                $("#articleTitleForContent").html(data.articleTitle);
+                    "../api/article/" + id + "/discuss");
+                $("#articleTitle").html(data.articleTitle);
                 $("#articleContent").html(data.articleContent);
             },
             error: function () {
@@ -125,7 +141,7 @@
             curDiscussPage = page;
 
             $.ajax({
-                url: "../api/articles/" + articleId + "/discuss/page/"
+                url: "../api/article/" + articleId + "/discuss/page/"
                 + page,
                 type: "GET",
                 dataType: 'json',
@@ -169,7 +185,7 @@
 
     function refreshDiscussLastPage() {
         $.ajax({
-            url: "../api/articles/" + articleId + "/discuss/page",
+            url: "../api/article/" + articleId + "/discuss/page",
             type: "GET",
             dataType: 'json',
             success: function (data) {
@@ -184,7 +200,7 @@
 
     function refreshDiscussPageNav() {
         $.ajax({
-            url: "../api/articles/" + articleId + "/discuss/page",
+            url: "../api/article/" + articleId + "/discuss/page",
             type: "GET",
             dataType: 'json',
             success: function (data) {
@@ -223,5 +239,8 @@
     }
 
 </script>
+
+
 </body>
 </html>
+

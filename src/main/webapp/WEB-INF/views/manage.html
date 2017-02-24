@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/xblog.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="shortcut icon" href="/images/Home.ico"/>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/npm.js"></script>
+    <script type="text/javascript" src="/js/default-main.js"></script>
+    <title>心有猛虎，细嗅蔷薇</title>
+</head>
+<body>
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/index.html">主页</a>
+            <a class="blog-nav-item" href="/index">文章</a>
+            <a class="blog-nav-item" href="/api">API</a>
+
+            <div class="blog-nav-login-status">
+                <div id="logoutArea" class="hide">
+                    <a href="#" id="userDisplayName" class="blog-nav-item">null</a>
+                    <span class="welcome-title">欢迎回来！&nbsp&nbsp</span>
+                    <a href="#" id="logout" class="blog-nav-item">注销</a>
+                </div>
+                <div id="login_register" class="show">
+                    <a href="/login.html" class="blog-nav-item">登录</a>
+                    <a href="/register.html" class="blog-nav-item">注册</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">心有猛虎，细嗅蔷薇</h1>
+        <p class="lead blog-description">写点代码虚度光阴.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 blog-main">
+            <div class="blog-post">
+                <div id="divError" class="clsError"></div>
+                <div class="tabbable tabs-left" id="tabsapi">
+                    <ul id="myTab" class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#panelArticle" data-toggle="tab">文章</a>
+                        </li>
+                        <li>
+                            <a href="#panelDiscuss" data-toggle="tab">评论</a>
+                        </li>
+                        <li>
+                            <a href="#panelUser" data-toggle="tab">用户</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="panelArticle">
+
+                        </div>
+                        <div class="tab-pane" id="panelDiscuss">
+
+                        </div>
+                        <div class="tab-pane" id="panelUser">
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.blog-post -->
+
+        </div><!-- /.blog-main -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+<script>
+    $(document).ready(
+        function () {
+            refreshPanelArticle();
+            $.simpleBlog.refreshUserNameArea();
+        });
+
+    function refreshPanelArticle() {
+        $.ajax({
+            url: "/api/article",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
+                var panelArticle = $("#panelArticle");
+                panelArticle.empty();
+                for (var i = 0; i < data.articles.length; i++) {
+                    var aP = $('<p></p>');
+                    aP.html(
+                        "<a href=\"article/" + data.articles[i].id + "\"> " + data.articles[i].title + "</a> "
+                        + "<a class=\"btn\" href=\"article/publish/" + data.articles[i].id + "\">edit</a>"
+                        + "<a class=\"btn\" href=\"javascript:deleteArticle(" + data.articles[i].id + ")\"> delete </a>");
+                    aP.appendTo(panelArticle);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            error: function () {
+                $("#divError").show().html("请求资源错误！");
+            }
+        });
+    }
+
+    function deleteArticle(id) {
+        if (confirm("确认要删除？")) {
+            if (id > 0) {
+                $.ajax({
+                    url: "/api/article/" + id,
+                    type: "DELETE",
+                    dataType: 'json',
+                    data: {
+                        "articleid": id
+                    },
+                    success: function (data) {
+                        $("#divError").show().html("删除成功！");
+                        refreshPanelArticle();
+                    },
+                    error: function () {
+                        $("#divError").show().html("删除失败！");
+                        refreshPanelArticle();
+                    }
+                });
+            }
+        }
+    }
+</script>
+</body>
+</html>
+

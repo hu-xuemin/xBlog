@@ -33,7 +33,7 @@ import com.huxuemin.xblog.infrastructure.dtos.DiscussDTOList;
 import com.huxuemin.xblog.infrastructure.dtos.PageDTO;
 
 @RestController
-@RequestMapping(value = "/api/articles")
+@RequestMapping(value = "/api/article")
 public class ArticleAPI {
 
 	@Autowired
@@ -60,7 +60,7 @@ public class ArticleAPI {
 		ArticleDTO article = ArticleFactory
 				.createArticleDTO(articleService.publish(articleTitle, articleContent, userName, password));
 		HttpHeaders headers = new HttpHeaders();
-		URI locationUri = ucb.path("/articles/").path(String.valueOf(article.getArticleId())).build().toUri();
+		URI locationUri = ucb.path("/article/").path(String.valueOf(article.getArticleId())).build().toUri();
 		headers.setLocation(locationUri);
 		ResponseEntity<ArticleDTO> responseEntity = new ResponseEntity<ArticleDTO>(article, headers, HttpStatus.OK);
 		return responseEntity;
@@ -78,7 +78,7 @@ public class ArticleAPI {
 		ArticleDTO article = ArticleFactory
 				.createArticleDTO(articleService.edit(articleId, articleTitle, articleContent, username, password));
 		HttpHeaders headers = new HttpHeaders();
-		URI locationUri = ucb.path("/api/articles/").path(String.valueOf(article.getArticleId())).build().toUri();
+		URI locationUri = ucb.path("/api/article/").path(String.valueOf(article.getArticleId())).build().toUri();
 		headers.setLocation(locationUri);
 		ResponseEntity<ArticleDTO> responseEntity = new ResponseEntity<ArticleDTO>(article, headers,
 				HttpStatus.ACCEPTED);
