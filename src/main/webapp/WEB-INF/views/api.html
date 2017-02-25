@@ -45,8 +45,10 @@
     <div class="row">
         <div class="col-sm-12 blog-main">
             <div class="blog-post">
-                <h4>当前支持xml、json格式。例： <a href="http://www.huxuemin.com/api/articles.xml">http://www.huxuemin.com/api/articles.xml</a>
-                    、<a href="http://www.huxuemin.com/api/articles.json">http://www.huxuemin.com/api/articles.json</a>
+                <h4>1、服务器接受数据。支持此xml、json、x-www-form-urlencoded三种格式.</h4> 
+                <h4>2、返回数据支持xml、json格式。</h4>
+                <h4>例： <a href="http://www.huxuemin.com/api/article.xml">http://www.huxuemin.com/api/articles.xml</a>
+                    、<a href="http://www.huxuemin.com/api/article.json">http://www.huxuemin.com/api/articles.json</a>
                 </h4>
                 <div class="blog-post-content">
                     <div>
@@ -63,35 +65,70 @@
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane active" id="panelArticle">
+                                <span>
+                                    1、获取文章目录: /api/article。请求类型：GET。
+                                </span>
                                 <p>
-                                    文章目录: /api/articles。
-                                    支持方法：get:获取文章目录。
+                                    2、文章内容：/api/article/{articleId}。请求类型：GET。<br />
+                                    例：/api/article/11804505069905。
                                 </p>
                                 <p>
-                                    文章：/api/articles/{articleId}。例：/api/articles/11804505069905。
-                                    支持方法：get:获取文章。
-                                </p>
+                                    3、删除文章：/api/article/{articleId}。请求类型：DELETE。<br />
+                                 </p>
+                                 <p>
+                                    4、关闭文章评论：/api/article/{articleId}/discuss/close。请求类型：PUT。
+                                 </p>
+                                 <p>
+                                    5、打开文章评论：/api/article/{articleId}/discuss/open。请求类型：PUT。
+                                 </p>
+                                 <p>
+                                    6、查询文章是否可以评论：/api/article/{articleId}/discuss/canreply。请求类型：GET。
+                                 </p>
+                                 <p>
+                                    7、发布新文章：/api/article。请求类型：POST。
+                                 </p>
+                                 <p>
+                                    8、修改文章：/api/article/{articleId}。请求类型：PUT。
+                                 </p>
                             </div>
                             <div class="tab-pane" id="panelDiscuss">
                                 <p>
-                                    评论：/api/articles/{articleId}/discuss/{discussId}。
+                                    1、文章所有评论：/api/article/{articleId}/discuss。请求类型：GET。
                                 </p>
                                 <p>
-                                    评论页面数：/api/articles/{articleId}/discuss/page。每页10条评论。
+                                    2、评论页面数：/api/article/{articleId}/discuss/page，每页10条评论。请求类型：GET。
                                 </p>
                                 <p>
-                                    获取一页评论：/api/articles/{articleId}/discuss/page／{number}。每页10条评论。
+                                    3、获取指定页评论：/api/article/{articleId}/discuss/page/{number}，请求类型：GET。
+                                </p>
+                                <p>
+                                    4、回复文章：/api/article/{articleId}/discuss，请求类型：POST。
+                                </p>
+                                <p>
+                                    5、回复文章评论：/api/article/{articleId}/discuss/{discussId}，请求类型：POST。
                                 </p>
                             </div>
                             <div class="tab-pane" id="panelUser">
                                 <p>
-                                    用户登录信息：/api/login
+                                    1、用户登录信息：/api/login，请求类型：GET。
                                 </p>
                                 <p>
-                                    用户信息：/api/user/{username}。
+                                    2、用户登录：/api/login，请求类型：POST。
                                 </p>
                                 <p>
-                                    判断是否具有修改用户资料权限：/api/user/{username}/canedit
+                                    3、用户退出：/api/login，请求类型：DELETE。
+                                </p>
+                                <p>
+                                    4、是否具有修改该用户资料权限：/api/user/{username}/canedit，请求类型：GET。
+                                </p>
+                                <p>
+                                    5、获取用户资料：/api/user/{username}，请求类型：GET。
+                                </p>
+                                <p>
+                                    6、修改该用户资料：/api/user/{username}，请求类型：PUT。
+                                </p>
+                                <p>
+                                    7、用户注册：/api/user，请求类型：POST。
                                 </p>
                             </div>
                         </div>

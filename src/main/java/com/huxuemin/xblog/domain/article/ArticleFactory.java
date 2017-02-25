@@ -85,7 +85,7 @@ public class ArticleFactory {
 
 	public static Article createArticle(String username, String title, String articlecontent) {
 		Article article = new Article(getId(), username, title, articlecontent);
-		article.canDiscuss();
+		article.openDiscuss();
 		article.classify("talk");
 		article.top(new Date(System.currentTimeMillis()));
 		return article;

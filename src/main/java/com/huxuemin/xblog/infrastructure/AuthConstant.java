@@ -14,8 +14,10 @@ public enum AuthConstant {
 
 	DISCUSS_MANAGER(104,"discuss managerment rights"),
 
-	PUBLIC_DISCUSS(201,"publish discuss rights");
+	PUBLIC_DISCUSS(201,"publish discuss rights"),
 
+    MANAGE_PAGE(301,"access manage page rights");
+    
 	int num;
 
 	String desc;

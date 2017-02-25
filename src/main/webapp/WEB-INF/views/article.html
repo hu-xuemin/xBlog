@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/bootstrap-theme.css">
-    <link rel="stylesheet" href="../css/xblog.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/xblog.css">
     <link rel="shortcut icon" href="/images/Home.ico"/>
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <script src="../js/npm.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/npm.js"></script>
     <script type="text/javascript" src="/js/default-main.js"></script>
     <title>心有猛虎，细嗅蔷薇</title>
 </head>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-10 blog-main">
+        <div class="col-sm-12 blog-main">
             <div class="blog-post">
                 <div id="articleTitle" class="blog-post-title"></div>
                 <div id="articleContent" class="blog-post-content"></div>
@@ -52,14 +52,14 @@
             <div class="blog-discuss">
                 <span>评论列表：</span>
                 <div class="line"></div>
-                <div id="discussArea"></div>
-                <div id="discussPage" class="pagination"></div>
+                <div id="discussArea" class="blog-discuss-area"></div>
+                <div id="discussPage"></div>
                 <form id="reply" accept-charset="UTF-8" method="post">
                     <fieldset>
                         <label>发表评论：</label>
                         <div id="discussError" class="clsError"></div>
-                        <textarea name="content" id="content" class="blog-discuss-comments" type="text"></textarea>
-                        <button type="submit">提交</button>
+                        <textarea name="content" placeholder="所在用户组暂不支持评论！" id="content" class="blog-discuss-comments" disabled type="text"></textarea>
+                        <button id="contentsubmit" type="submit" disabled>提交</button>
                     </fieldset>
                 </form>
             </div>
@@ -89,6 +89,7 @@
             refreshDiscuss(1);
             initReply();
             refreshDiscussPageNav();
+            canDiscuss();
         } else {
             $("#divError").show().html("文章不存在！");
         }
@@ -120,12 +121,12 @@
 
     function loadArticle(id) {
         $.ajax({
-            url: "../api/article/" + id,
+            url: "/api/article/" + id,
             type: "GET",
             dataType: 'json',
             success: function (data) {
                 $("#reply").attr("action",
-                    "../api/article/" + id + "/discuss");
+                    "/api/article/" + id + "/discuss");
                 $("#articleTitle").html(data.articleTitle);
                 $("#articleContent").html(data.articleContent);
             },
@@ -141,7 +142,7 @@
             curDiscussPage = page;
 
             $.ajax({
-                url: "../api/article/" + articleId + "/discuss/page/"
+                url: "/api/article/" + articleId + "/discuss/page/"
                 + page,
                 type: "GET",
                 dataType: 'json',
@@ -173,7 +174,7 @@
         for (var i = 0; i < data.discusses.length; i++) {
             discussarea.append(
                 "<div class=\"panel panel-info\"><div class=\"panel-heading\">"
-                + "<a href=../user/"
+                + "<a href=/user/"
                 + $.trim(data.discusses[i].owerUserName)
                 + " class=\"navbar-link\">"
                 + data.discusses[i].owerDisplayName + "</a>"
@@ -185,7 +186,7 @@
 
     function refreshDiscussLastPage() {
         $.ajax({
-            url: "../api/article/" + articleId + "/discuss/page",
+            url: "/api/article/" + articleId + "/discuss/page",
             type: "GET",
             dataType: 'json',
             success: function (data) {
@@ -198,16 +199,34 @@
         });
     }
 
+    function canDiscuss() {
+        $.ajax({
+            url: "/api/article/" + articleId + "/discuss/canreply",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
+            	$("#content").attr("placeholder","");
+                $("#content").removeAttr("disabled");
+                $("#contentsubmit").removeAttr("disabled");
+            },
+            error: function () {
+                $("#content").attr("placeholder","所在用户组暂不支持评论！");
+                $("#content").addAttr("disabled");
+                $("#contentsubmit").addAttr("disabled");
+            }
+        });
+    }
+    
     function refreshDiscussPageNav() {
         $.ajax({
-            url: "../api/article/" + articleId + "/discuss/page",
+            url: "/api/article/" + articleId + "/discuss/page",
             type: "GET",
             dataType: 'json',
             success: function (data) {
                 if (data.total > 0) {
                     var discusspage = $("#discussPage");
                     discusspage.empty();
-                    discusspage.append("<ul></ul>");
+                    discusspage.append("<ul class=\"pagination\"></ul>");
                     var ul = discusspage.find("ul");
                     ul.append("<li><a href=\"javascript:refreshDiscuss("
                         + (curDiscussPage - 1)
@@ -239,8 +258,6 @@
     }
 
 </script>
-
-
 </body>
 </html>
 

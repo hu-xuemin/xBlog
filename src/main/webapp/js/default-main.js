@@ -2,7 +2,9 @@
  * Created by huxuemin on 2016-5-18.
  */
 (function($){
-    $.simpleBlog = function(){};
+    var curDiscussPage;
+    $.simpleBlog = function(){
+    };
 
     $.simpleBlog.asynSubmit = function(el, options) {
         var base = this;
@@ -90,14 +92,6 @@
         }
     };
 
-    $.simpleBlog.htmlEscaptForJson = function (text){
-        text = text.replace(/:/g, "&#58;");
-        text = text.replace(/"/g, "&quot;");
-        text = text.replace(/{/g, "&#123;");
-        text = text.replace(/}/gm, "&#125;");
-        return text;
-    };
-
     $.simpleBlog.refreshUserNameArea = function(){
         $.ajax({
             url: "/api/login",
@@ -157,5 +151,5 @@
         	if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
-
+    
 })(jQuery);

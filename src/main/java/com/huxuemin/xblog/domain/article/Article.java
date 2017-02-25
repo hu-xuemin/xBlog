@@ -9,6 +9,8 @@ import com.huxuemin.xblog.database.mapper.OneToManyDomainObject;
 import com.huxuemin.xblog.database.mapper.OneToOneColumn;
 import com.huxuemin.xblog.database.mapper.PrimaryKeyColumn;
 import com.huxuemin.xblog.database.mapper.Table;
+import com.huxuemin.xblog.infrastructure.AuthConstant;
+import com.huxuemin.xblog.infrastructure.AuthException;
 import com.huxuemin.xblog.infrastructure.DomainObject;
 
 @Table(name = "ARTICLES")
@@ -136,7 +138,7 @@ public class Article extends DomainObject {
 		return this.category;
 	}
 
-	public boolean canDiscuss() {
+	public boolean canReply() {
 		this.markDirty();
 		return canDiscussStatus && articleStatus == 0;
 	}
@@ -243,19 +245,21 @@ public class Article extends DomainObject {
 	public Discuss replyArticle(String username, String content) {
 		// TODO Auto-generated method stub
 		Discuss discuss = null;
-		if (content != null && content.length() > 2) {
+		if (canDiscussStatus && content != null && content.length() > 2) {
 			Date date = new Date(System.currentTimeMillis());
 			discuss = new Discuss(ArticleFactory.getId(), content, id, id, username, date);
 			disscusses.add(discuss);
 			refreshLastReplyTime(date);
+	        return discuss;
 		}
-		return discuss;
+
+        throw new AuthException(AuthConstant.PUBLIC_DISCUSS);
 	}
 
 	public Discuss replyDiscuss(String username, long discussId, String content) {
 		// TODO Auto-generated method stub
 		Discuss discuss = null;
-		if (content != null && content.length() > 2) {
+		if (canDiscussStatus && content != null && content.length() > 2) {
 			Date date = new Date(System.currentTimeMillis());
 			if (disscussIsExist(discussId)) {
 				discuss = new Discuss(ArticleFactory.getId(), content, id, discussId, username, date);
@@ -264,8 +268,10 @@ public class Article extends DomainObject {
 			}
 			disscusses.add(discuss);
 			refreshLastReplyTime(date);
+	        return discuss;
 		}
-		return discuss;
+		
+		throw new AuthException(AuthConstant.PUBLIC_DISCUSS);
 	}
 
 	public Date lastReplyTime() {

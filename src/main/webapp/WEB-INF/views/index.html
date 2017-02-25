@@ -17,7 +17,7 @@
     <div class="container">
         <nav class="blog-nav">
             <a class="blog-nav-item active" href="/index">主页</a>
-            <a class="blog-nav-item" href="/index">热门文章</a>
+            <a class="blog-nav-item" href="/index">Wiki</a>
             <a class="blog-nav-item" href="/api">API</a>
 
             <div class="blog-nav-login-status">
@@ -87,14 +87,14 @@
     $(document).ready(
         function () {
             $.ajax({
-                url: "api/article",
+                url: "/api/article",
                 type: "GET",
                 dataType: 'json',
                 success: function (data) {
                     $("#divError").show().html("success！");
                     for (var i = 0; i < data.articles.length; i++) {
                         $("#acticles_table tbody").prepend(
-                            "<tr><td><a href=\"article/" + data.articles[i].id + "\"> "
+                            "<tr><td><a href=\"/article/" + data.articles[i].id + "\"> "
                             + data.articles[i].title
                             + "</a></td></tr>");
                     }

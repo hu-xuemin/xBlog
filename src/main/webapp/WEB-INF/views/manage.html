@@ -98,7 +98,9 @@
                     aP.html(
                         "<a href=\"article/" + data.articles[i].id + "\"> " + data.articles[i].title + "</a> "
                         + "<a class=\"btn\" href=\"article/publish/" + data.articles[i].id + "\">edit</a>"
-                        + "<a class=\"btn\" href=\"javascript:deleteArticle(" + data.articles[i].id + ")\"> delete </a>");
+                        + "<a class=\"btn\" href=\"javascript:deleteArticle(" + data.articles[i].id + ")\"> delete </a>"
+                        + "<a class=\"btn\" href=\"javascript:closeDiscuss(" + data.articles[i].id + ")\"> closediscuss </a>"
+                        + "<a class=\"btn\" href=\"javascript:openDiscuss(" + data.articles[i].id + ")\"> opendiscuss </a>");
                     aP.appendTo(panelArticle);
                 }
             },
@@ -131,6 +133,44 @@
                 });
             }
         }
+    }
+    
+    function closeDiscuss(id) {
+            if (id > 0) {
+                $.ajax({
+                    url: "/api/article/" + id + "/discuss/close",
+                    type: "PUT",
+                    dataType: 'json',
+                    data: {
+                        "articleid": id
+                    },
+                    success: function (data) {
+                        $("#divError").show().html("评论关闭成功！");
+                    },
+                    error: function () {
+                        $("#divError").show().html("评论关闭失败！");
+                    }
+                });
+            }
+    }
+    
+    function openDiscuss(id) {
+            if (id > 0) {
+                $.ajax({
+                    url: "/api/article/" + id + "/discuss/open",
+                    type: "PUT",
+                    dataType: 'json',
+                    data: {
+                        "articleid": id
+                    },
+                    success: function (data) {
+                        $("#divError").show().html("评论打开成功！");
+                    },
+                    error: function () {
+                        $("#divError").show().html("评论打开失败！");
+                    }
+                });
+            }
     }
 </script>
 </body>

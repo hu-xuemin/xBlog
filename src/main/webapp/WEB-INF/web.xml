@@ -1,7 +1,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	
+
 	<!-- 配置加载log4j.xml文件路径 -->
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
@@ -25,6 +25,10 @@
 	<listener>
 		<listener-class>com.huxuemin.xblog.web.ContextManager</listener-class>
 	</listener>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/404.html</location>
+	</error-page>
 	<!-- <servlet> <servlet-name>CommandServlet</servlet-name> <servlet-class>com.huxuemin.xblog.web.CommandServlet</servlet-class> 
 		</servlet> <servlet-mapping> <servlet-name>CommandServlet</servlet-name> 
 		<url-pattern>/Command.interface</url-pattern> </servlet-mapping> -->

@@ -1,18 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="/css/default-home.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/xblog.css">
     <link rel="shortcut icon" href="/images/Home.ico"/>
-    <script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/npm.js"></script>
     <script type="text/javascript" src="/js/default-main.js"></script>
     <title>心有猛虎，细嗅蔷薇</title>
 </head>
 <body>
-	404错误!
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item" href="/index.html">主页</a>
+            <a class="blog-nav-item active" href="/index">文章</a>
+            <a class="blog-nav-item" href="/api">API</a>
+
+            <div class="blog-nav-login-status">
+                <div id="logoutArea" class="hide">
+                    <a href="#" id="userDisplayName" class="blog-nav-item">null</a>
+                    <span class="welcome-title">欢迎回来！&nbsp&nbsp</span>
+                    <a href="#" id="logout" class="blog-nav-item">注销</a>
+                </div>
+                <div id="login_register" class="show">
+                    <a href="/login.html" class="blog-nav-item">登录</a>
+                    <a href="/register.html" class="blog-nav-item">注册</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">心有猛虎，细嗅蔷薇</h1>
+        <p class="lead blog-description">写点代码虚度光阴.</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 blog-main">
+            <div class="blog-post">
+                <h2><em><span>404 Error&nbsp;&nbsp; </span></em>:所查找的页面不存在,可能已被删除或您输错了网址!</h2>
+                <h1 class="error-div"></h1>
+                <p class="link">
+			        <a href="/index">&#9666;返回首页</a>
+			    </p>
+            </div><!-- /.blog-post -->
+        </div><!-- /.blog-main -->
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<footer class="blog-footer">
+    <p><a href="http://www.miitbeian.gov.cn/">粤ICP备15102090号-1</a> | <a href="mailto:hu-xuemin@qq.com/">联系作者：hu-xuemin@qq.com</a>
+    </p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
 </body>
 </html>
+

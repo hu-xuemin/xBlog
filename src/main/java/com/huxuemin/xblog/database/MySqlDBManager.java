@@ -84,6 +84,9 @@ class MySqlDBManager{
 			smt.addBatch(flush);
 			smt.executeBatch();
 			smt.close();
+            if(!conn.getAutoCommit()){
+                conn.commit();
+            }
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -40,6 +40,9 @@ public abstract class ITable {
 			}
 			smt.executeBatch();
 			smt.close();
+            if(!conn.getAutoCommit()){
+                conn.commit();
+            }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

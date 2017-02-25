@@ -18,10 +18,12 @@ public class RoleAuthTable extends ITable {
 	private String initAdmin3 = "INSERT INTO rolesauth(name,authority) VALUES('admin','" + AuthConstant.DISCUSS_MANAGER + "')";
 	private String initAdmin4 = "INSERT INTO rolesauth(name,authority) VALUES('admin','" + AuthConstant.USER_MANAGER + "')";
 	private String initAdmin5 = "INSERT INTO rolesauth(name,authority) VALUES('admin','" + AuthConstant.PUBLIC_DISCUSS + "')";
+    private String initAdmin6 = "INSERT INTO rolesauth(name,authority) VALUES('admin','" + AuthConstant.MANAGE_PAGE + "')";
 
 	private String initManager1 = "INSERT INTO rolesauth(name,authority) VALUES('manager','" + AuthConstant.USER_MANAGER + "')";
 	private String initManager2 = "INSERT INTO rolesauth(name,authority) VALUES('manager','" + AuthConstant.DISCUSS_MANAGER + "')";
 	private String initManager3 = "INSERT INTO rolesauth(name,authority) VALUES('manager','" + AuthConstant.PUBLIC_DISCUSS + "')";
+    private String initManager4 = "INSERT INTO rolesauth(name,authority) VALUES('manager','" + AuthConstant.MANAGE_PAGE + "')";
 
 	private String initUser1 = "INSERT INTO rolesauth(name,authority) VALUES('user','" + AuthConstant.PUBLIC_DISCUSS + "')";
 	
@@ -29,8 +31,8 @@ public class RoleAuthTable extends ITable {
 	protected String[] getCreateStatement() {
 		// TODO Auto-generated method stub
 		return new String[] { dropTabel, createTabel, 
-				initAdmin1, initAdmin2, initAdmin3, initAdmin4,initAdmin5,
-				initManager1, initManager2,initManager3,
+				initAdmin1, initAdmin2, initAdmin3, initAdmin4,initAdmin5,initAdmin6,
+				initManager1, initManager2,initManager3,initManager4,
 				initUser1
 				};
 	}

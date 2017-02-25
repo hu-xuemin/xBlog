@@ -31,6 +31,18 @@ public class UserService {
 		}
 		throw new UserVerifyFailedException();
 	}
+	
+	public boolean manage(String username, String password) throws UserVerifyFailedException {
+        if (regexCheckUsername(username) && regexCheckPassword(password)) {
+            User user = RepositoryRegister.getUserRepository().get(username);
+            if (user != null && user.checkPassword(password)) {
+                if(user.hasAuth(AuthConstant.MANAGE_PAGE)){
+                    return true;
+                }
+            }
+        }
+        throw new AuthException(AuthConstant.MANAGE_PAGE);
+    }
 
 	public void testPublish() {
 		System.out.println("testPublish()");
