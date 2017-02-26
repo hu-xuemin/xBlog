@@ -2,7 +2,7 @@ package com.huxuemin.xblog.database.table;
 
 import com.huxuemin.xblog.database.ITable;
 
-public class UserPublicInfoTable extends ITable{
+class UserPublicInfoTable extends ITable{
 	private String dropTabel = "DROP TABLE IF EXISTS `userpublicinfo`;";
 	private String createTabel = "CREATE TABLE `userpublicinfo` (" 
 			+ "`username` varchar(255) NOT NULL DEFAULT '',"
@@ -18,7 +18,7 @@ public class UserPublicInfoTable extends ITable{
 			+ ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 	private String initAdmin1 = "INSERT INTO userpublicinfo(username,firstname,lastname,lang,profession,country,sex,birthday,profile)"
-	+ " VALUES('admin','','admin','','IT','','man','1987-01-01','ÐÄÓÐÃÍ»¢Ï¸ÐáÇ¾Þ±');";
+	+ " VALUES('admin','','admin','','IT','','man','1987-01-01','ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½Ï¸ï¿½ï¿½Ç¾Þ±');";
 	
 	@Override
 	protected String[] getCreateStatement() {

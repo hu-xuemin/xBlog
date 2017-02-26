@@ -130,6 +130,19 @@ public class UserService {
 		}
 		throw new AuthException(AuthConstant.USER_MANAGER);
 	}
+	
+	public boolean changePassword(String username, String oldPassword, String newPassword){
+	    boolean result = false;
+        if (regexCheckUsername(username)) {
+            User usersinfo = RepositoryRegister.getUserRepository().get(username);
+            if (usersinfo != null && regexCheckPassword(oldPassword) && regexCheckPassword(newPassword)) {
+                UnitOfWork.newCurrent();
+                result = usersinfo.changePassword(oldPassword, newPassword);
+                UnitOfWork.getCurrent().commit();
+            }
+        }
+        return result;
+	}
 
 	private boolean regexCheckUsername(String username) {
 		if (username != null) {

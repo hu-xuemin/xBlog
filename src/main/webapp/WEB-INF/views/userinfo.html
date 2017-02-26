@@ -49,6 +49,7 @@
                     <div>
                         <p class="navbar-text pull-right">
                             <button id="edit" class="btn-primary">编辑资料</button>
+                            <a class="hide" href="#" id="change_password">修改密码</a>
                         </p>
                     </div>
                     <form class="form-horizontal" id="user_info" role="form" accept-charset="UTF-8" method="PUT">
@@ -247,11 +248,10 @@
     </p>
 </footer>
 <script>
-    var username;
     $(document)
         .ready(
             function () {
-                username = $.simpleBlog.getUserName();
+                var username = $.simpleBlog.getUserName();
                 if (username) {
                     $.ajax({
                         url: "/api/user/" + username,
@@ -259,8 +259,8 @@
                         dataType: 'json',
                         data: {},
                         success: function (data) {
-                            $("#user_info").attr("action",
-                                "/api/user/" + username);
+                        	showChangePassword(data.userName);
+                            $("#user_info").attr("action", "/api/user/" + username);
                             $("#username").val(data.userName);
                             $("#firstname").val(data.firstName);
                             $("#lastname").val(data.lastName);
@@ -284,76 +284,60 @@
 
                 $("#edit").click(
                     function () {
-                        $
-                            .ajax({
-                                url: "/api/user/"
-                                + username
-                                + "/canedit",
-                                type: "GET",
-                                dataType: 'json',
-                                data: {},
-                                success: function (data) {
-                                    $("#firstname").attr(
-                                        "readonly",
-                                        false);
-                                    $("#lastname").attr(
-                                        "readonly",
-                                        false);
-                                    $("#lang").attr(
-                                        'disabled',
-                                        false);
-                                    $("#country").attr(
-                                        "readonly",
-                                        false);
-                                    $("#sex").attr(
-                                        "disabled",
-                                        false);
-                                    $("#qq").attr(
-                                        "readonly",
-                                        false);
-                                    $("#phonenum").attr(
-                                        "readonly",
-                                        false);
-                                    $("#wechat").attr(
-                                        "readonly",
-                                        false);
-                                    $("#email").attr(
-                                        "readonly",
-                                        false);
-                                    $("#profile").attr(
-                                        "readonly",
-                                        false);
-                                    $("#profession").attr(
-                                        "readonly",
-                                        false);
-                                    $("#save").removeAttr(
-                                        "disabled");
-                                },
-                                complete: function (XMLHttpRequest,
-                                                    textStatus) {
-                                }
-                            });
-                    });
-                $("#user_info")
-                    .asynSubmit(
-                        {
-                            beforeSubmit: function () {
-                                return true;
+                        $.ajax({
+                            url: "/api/user/" + username + "/canedit",
+                            type: "GET",
+                            dataType: 'json',
+                            data: {},
+                            success: function (data) {
+                                $("#firstname").attr( "readonly", false);
+                                $("#lastname").attr( "readonly", false);
+                                $("#lang").attr( 'disabled', false);
+                                $("#country").attr( "readonly", false);
+                                $("#sex").attr( "disabled", false);
+                                $("#qq").attr( "readonly", false);
+                                $("#phonenum").attr( "readonly", false);
+                                $("#wechat").attr( "readonly", false);
+                                $("#email").attr( "readonly", false);
+                                $("#profile").attr( "readonly", false);
+                                $("#profession").attr( "readonly", false);
+                                $("#save").removeAttr( "disabled");
                             },
-                            successSubmit: function (data) {
-                                $("#divError").show().html(
-                                    "保存成功！");
-                            },
-                            errorSubmit: function (XMLHttpRequest,
-                                                   textStatus, errorThrown) {
-                                $("#divError")
-                                    .show()
-                                    .html(
-                                        XMLHttpRequest.responseJSON.message);
+                            complete: function (XMLHttpRequest, textStatus) {
                             }
                         });
+                });
+                
+                $("#user_info").asynSubmit({
+                    beforeSubmit: function () {
+                        return true;
+                    },
+                    successSubmit: function (data) {
+                        $("#divError").show().html("保存成功！");
+                    },
+                    errorSubmit: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $("#divError").show().html(XMLHttpRequest.responseJSON.message);
+                    }
+                });
                 $.simpleBlog.refreshUserNameArea();
             });
+
+    function showChangePassword(username){
+        $.ajax({
+            url: "/api/login",
+            type: "GET",
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+            	if(data.userName == username){
+                    $("#change_password").attr("href","/user/" + username + "/password");
+                    $("#change_password").removeClass("hide").addClass("show");
+            	}
+            },
+            error: function() {
+            }
+        });
+    }
 </script>
 </body>
 </html>

@@ -11,8 +11,6 @@ import com.huxuemin.xblog.database.table.ArticleTable;
 import com.huxuemin.xblog.database.table.DiscussTable;
 import com.huxuemin.xblog.database.table.RoleAuthTable;
 import com.huxuemin.xblog.database.table.RolesTable;
-import com.huxuemin.xblog.database.table.UserPrivateInfoTable;
-import com.huxuemin.xblog.database.table.UserPublicInfoTable;
 import com.huxuemin.xblog.database.table.UserRolesTable;
 import com.huxuemin.xblog.database.table.UserTable;
 
@@ -47,8 +45,8 @@ public class DBConnectionFactory {
 		initTable(new ArticleTable());
 		initTable(new DiscussTable());
 		initTable(new UserRolesTable());
-		initTable(new UserPublicInfoTable());
-		initTable(new UserPrivateInfoTable());
+//		initTable(new UserPublicInfoTable());
+//		initTable(new UserPrivateInfoTable());
 	}
 
 	static ConnectionAdapter createNewConnectionAdapter(ConnectionPool pool) {

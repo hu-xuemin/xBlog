@@ -59,11 +59,11 @@ h6, .h6 {
     float: right;
 }
 
-.blog-nav-login-status .show {
+.show {
     display: inline;
 }
 
-.blog-nav-login-status .hide {
+.hide {
     display: none;
 }
 

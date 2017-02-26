@@ -128,7 +128,7 @@ public class User extends DomainObject {
 		return result;
 	}
 
-	public void changePassword(String oldPassword, String newPassword) {
+	public boolean changePassword(String oldPassword, String newPassword) {
 		if (checkPassword(oldPassword)) {
 			try {
 				String s = MD5Tools.md5Encode(userName + String.valueOf(System.currentTimeMillis()));
@@ -142,7 +142,9 @@ public class User extends DomainObject {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return true;
 		}
+		return false;
 	}
 
 	public void newPassword(String newPassword) {

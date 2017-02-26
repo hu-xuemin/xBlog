@@ -29,6 +29,22 @@
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/404.html</location>
 	</error-page>
+	<error-page>
+        <error-code>400</error-code>
+        <location>/WEB-INF/views/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/WEB-INF/views/404.html</location>
+    </error-page>
 	<!-- <servlet> <servlet-name>CommandServlet</servlet-name> <servlet-class>com.huxuemin.xblog.web.CommandServlet</servlet-class> 
 		</servlet> <servlet-mapping> <servlet-name>CommandServlet</servlet-name> 
 		<url-pattern>/Command.interface</url-pattern> </servlet-mapping> -->

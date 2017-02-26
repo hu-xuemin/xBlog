@@ -2,7 +2,7 @@ package com.huxuemin.xblog.database.table;
 
 import com.huxuemin.xblog.database.ITable;
 
-public class UserPrivateInfoTable extends ITable{
+class UserPrivateInfoTable extends ITable{
 	private String dropTabel = "DROP TABLE IF EXISTS `userprivateinfo`;";
 	private String createTabel = "CREATE TABLE `userprivateinfo` (" 
 			+ "`username` varchar(255) NOT NULL DEFAULT '',"

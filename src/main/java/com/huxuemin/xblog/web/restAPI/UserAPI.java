@@ -25,88 +25,98 @@ import com.huxuemin.xblog.infrastructure.AuthConstant;
 import com.huxuemin.xblog.infrastructure.AuthException;
 import com.huxuemin.xblog.infrastructure.ErrorMessage;
 import com.huxuemin.xblog.infrastructure.SessionConstant;
+import com.huxuemin.xblog.infrastructure.SuccessMessage;
 import com.huxuemin.xblog.infrastructure.dtos.UserInfoDTO;
 
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserAPI {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	@RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = { "application/json",
-			"application/xml" })
-	public ResponseEntity<UserInfoDTO> userInfo(@PathVariable(value = "username") String usernameforinfo,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute(SessionConstant.USERNAME);
-		String password = (String) session.getAttribute(SessionConstant.PASSWORD);
-		UserInfoDTO dto = userService.getUserInfo(username, password, usernameforinfo);
-		return new ResponseEntity<UserInfoDTO>(dto, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = { "application/json",
+            "application/xml" })
+    public ResponseEntity<UserInfoDTO> userInfo(@PathVariable(value = "username") String usernameforinfo,
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute(SessionConstant.USERNAME);
+        String password = (String) session.getAttribute(SessionConstant.PASSWORD);
+        UserInfoDTO dto = userService.getUserInfo(username, password, usernameforinfo);
+        return new ResponseEntity<UserInfoDTO>(dto, HttpStatus.OK);
+    }
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { "application/json", "application/xml",
-			"application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
-	public ResponseEntity<UserInfoDTO> register(@RequestParam(value = "user_login") String username,
-			@RequestParam(value = "user_password") String password, UriComponentsBuilder ucb,
-			HttpServletRequest request) {
-		UserInfoDTO userInfo = userService.register(username, password);
-		HttpHeaders header = new HttpHeaders();
-		URI uri = ucb.path("/api/user/").path(username).build().toUri();
-		header.setLocation(uri);
-		return new ResponseEntity<UserInfoDTO>(userInfo, header, HttpStatus.ACCEPTED);
-	}
+    @RequestMapping(method = RequestMethod.POST, consumes = { "application/json", "application/xml",
+            "application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
+    public ResponseEntity<UserInfoDTO> register(@RequestParam(value = "user_login") String username,
+            @RequestParam(value = "user_password") String password, UriComponentsBuilder ucb,
+            HttpServletRequest request) {
+        UserInfoDTO userInfo = userService.register(username, password);
+        HttpHeaders header = new HttpHeaders();
+        URI uri = ucb.path("/api/user/").path(username).build().toUri();
+        header.setLocation(uri);
+        return new ResponseEntity<UserInfoDTO>(userInfo, header, HttpStatus.ACCEPTED);
+    }
 
-	@RequestMapping(value = "/{username}", method = RequestMethod.PUT, consumes = { "application/json",
-			"application/xml",
-			"application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
-	public ResponseEntity<UserInfoDTO> edit(@PathVariable(value = "username") String username,
-			@ModelAttribute UserInfoDTO userInfo, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String loginId = (String) session.getAttribute(SessionConstant.USERNAME);
-		String password = (String) session.getAttribute(SessionConstant.PASSWORD);
+    @RequestMapping(value = "/{username}", method = RequestMethod.PUT, consumes = { "application/json",
+            "application/xml",
+            "application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
+    public ResponseEntity<UserInfoDTO> edit(@PathVariable(value = "username") String username,
+            @ModelAttribute UserInfoDTO userInfo, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String loginId = (String) session.getAttribute(SessionConstant.USERNAME);
+        String password = (String) session.getAttribute(SessionConstant.PASSWORD);
 
-		// System.out.println("logindId:" + loginId);
-		// System.out.println("userInfo.getUserName():" +
-		// userInfo.getUserName());
+        // System.out.println("logindId:" + loginId);
+        // System.out.println("userInfo.getUserName():" +
+        // userInfo.getUserName());
 
-		if (!userInfo.getUserName().equals(username)) {
-			throw new UserNotFoundException();
-		}
+        if (!userInfo.getUserName().equals(username)) {
+            throw new UserNotFoundException();
+        }
 
-		userService.modifyUserInfo(loginId, password, userInfo);
-		return new ResponseEntity<UserInfoDTO>(userInfo, HttpStatus.ACCEPTED);
-	}
+        userService.modifyUserInfo(loginId, password, userInfo);
+        return new ResponseEntity<UserInfoDTO>(userInfo, HttpStatus.ACCEPTED);
+    }
 
-	@RequestMapping(value = "/{username}/canedit", method = RequestMethod.GET, produces = { "application/json",
-			"application/xml" })
-	public ResponseEntity<String> canEdit(@PathVariable(value = "username") String username,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String loginId = (String) session.getAttribute(SessionConstant.USERNAME);
-		String password = (String) session.getAttribute(SessionConstant.PASSWORD);
+    @RequestMapping(value = "/{username}/canedit", method = RequestMethod.GET, produces = { "application/json" })
+    public ResponseEntity<SuccessMessage> canEdit(@PathVariable(value = "username") String username,
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String loginId = (String) session.getAttribute(SessionConstant.USERNAME);
+        String password = (String) session.getAttribute(SessionConstant.PASSWORD);
 
-		if (userService.hasEditUserInfoAuth(loginId, password, username)) {
-			return new ResponseEntity<String>("{\"canedit\":\"true\"}",HttpStatus.OK);
-		}
-		throw new AuthException(AuthConstant.USER_MANAGER);
-	}
+        if (userService.hasEditUserInfoAuth(loginId, password, username)) {
+            return new ResponseEntity<SuccessMessage>(new SuccessMessage(200, "Can edit!"), HttpStatus.OK);
+        }
+        throw new AuthException(AuthConstant.USER_MANAGER);
+    }
 
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ErrorMessage> userNotFoundException(UserNotFoundException exception) {
-		ErrorMessage errorMessage = new ErrorMessage(1, exception.getMessage());
-		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
-	}
+    @RequestMapping(value = "/{username}/password", method = RequestMethod.PUT, produces = { "application/json" })
+    public ResponseEntity<SuccessMessage> password(@PathVariable(value = "username") String username,
+            @RequestParam(value = "old_password") String oldPassword,
+            @RequestParam(value = "new_password") String newPassword, HttpServletRequest request) {
+        if(userService.changePassword(username,oldPassword,newPassword)){
+            return new ResponseEntity<SuccessMessage>(new SuccessMessage(200, "The password is changed!"), HttpStatus.OK);
+        }
+        throw new AuthException(AuthConstant.USER_MANAGER);
+    }
 
-	@ExceptionHandler(AuthException.class)
-	public ResponseEntity<ErrorMessage> authException(AuthException authException) {
-		ErrorMessage error = new ErrorMessage(1, authException.getMessage());
-		return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
-	}
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorMessage> userNotFoundException(UserNotFoundException exception) {
+        ErrorMessage errorMessage = new ErrorMessage(1, exception.getMessage());
+        return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 
-	@ExceptionHandler(UserVerifyFailedException.class)
-	public ResponseEntity<ErrorMessage> userVerifyFailedException(UserVerifyFailedException exception) {
-		ErrorMessage error = new ErrorMessage(1, exception.getMessage());
-		return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
-	}
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<ErrorMessage> authException(AuthException authException) {
+        ErrorMessage error = new ErrorMessage(1, authException.getMessage());
+        return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(UserVerifyFailedException.class)
+    public ResponseEntity<ErrorMessage> userVerifyFailedException(UserVerifyFailedException exception) {
+        ErrorMessage error = new ErrorMessage(1, exception.getMessage());
+        return new ResponseEntity<ErrorMessage>(error, HttpStatus.FORBIDDEN);
+    }
 }

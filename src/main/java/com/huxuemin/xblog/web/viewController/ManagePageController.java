@@ -14,7 +14,7 @@ import com.huxuemin.xblog.infrastructure.AuthException;
 import com.huxuemin.xblog.infrastructure.SessionConstant;
 
 @Controller
-@RequestMapping(value = "/manage")
+@RequestMapping(value = {"/manage","/admin"})
 public class ManagePageController {
 
     @Autowired
